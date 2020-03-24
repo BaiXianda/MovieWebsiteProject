@@ -5,7 +5,7 @@ class NavBar extends Component {
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
         <div className="container">
-          <a className="navbar-brand" href="Dashboard.html">
+          <a className="navbar-brand" href="/dashboard">
             Movie Watcher Tool
           </a>
           <button
@@ -28,14 +28,10 @@ class NavBar extends Component {
 
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <a className="nav-link " href="register.html">
-                  Sign Up
-                </a>
+                <a className="nav-link ">Sign Up</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="login.html">
-                  Login
-                </a>
+                <a className="nav-link">Login</a>
               </li>
             </ul>
           </div>

@@ -1,0 +1,3 @@
+export const GET_ERRORS = "GET_ERRORS";
+export const GET_MOVIELISTS = "GET_MOVIELISTS";
+export const GET_MOVIELIST = "GET_MOVIELIST";
