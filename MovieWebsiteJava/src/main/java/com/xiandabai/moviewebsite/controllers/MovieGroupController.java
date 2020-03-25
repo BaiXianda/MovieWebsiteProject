@@ -1,7 +1,7 @@
 package com.xiandabai.moviewebsite.controllers;
 
-import com.xiandabai.moviewebsite.domain.Group;
-import com.xiandabai.moviewebsite.services.GroupService;
+import com.xiandabai.moviewebsite.domain.MovieGroup;
+import com.xiandabai.moviewebsite.services.MovieGroupService;
 import com.xiandabai.moviewebsite.services.ValidationErrorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,39 +14,39 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/group")
 @CrossOrigin
-public class GroupController {
+public class MovieGroupController {
 
     @Autowired
-    private GroupService groupService;
+    private MovieGroupService movieGroupService;
 
     @Autowired
     private ValidationErrorService validationErrorService;
 
     @PostMapping("")
-    public ResponseEntity<?> createNewGroup(@Valid @RequestBody Group group, BindingResult result) {
+    public ResponseEntity<?> createNewGroup(@Valid @RequestBody MovieGroup movieGroup, BindingResult result) {
         ResponseEntity<?> errorMap = validationErrorService.MapValidationService(result);
         if(errorMap != null)
             return errorMap;
 
-        Group newGroup = groupService.saveOrUpdateGroup(group);
-        return new ResponseEntity<Group>(newGroup, HttpStatus.CREATED);
+        MovieGroup newMovieGroup = movieGroupService.saveOrUpdateGroup(movieGroup);
+        return new ResponseEntity<MovieGroup>(newMovieGroup, HttpStatus.CREATED);
     }
 
     @GetMapping("/{groupID}")
     public ResponseEntity<?> getGroupByGroupID(@PathVariable String id) {
-        Group group = groupService.findByGroupID(id);
+        MovieGroup movieGroup = movieGroupService.findByGroupID(id);
 
-        return new ResponseEntity<Group>(group, HttpStatus.OK);
+        return new ResponseEntity<MovieGroup>(movieGroup, HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public Iterable<Group> getAllGroups() {
-        return groupService.findAllGroups();
+    public Iterable<MovieGroup> getAllGroups() {
+        return movieGroupService.findAllGroups();
     }
 
     @DeleteMapping("/{groupID}")
     public ResponseEntity<?> deleteGroup(@PathVariable String id) {
-        groupService.deleteGroupByGroupId(id);
+        movieGroupService.deleteGroupByGroupId(id);
         return new ResponseEntity<String>("Group with ID: " + id + " is deleted", HttpStatus.OK);
     }
 

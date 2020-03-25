@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Group {
+public class MovieGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class Group {
     private String groupID;
     private String description;
 
-    public Group() {
+    public MovieGroup() {
 
     }
 
