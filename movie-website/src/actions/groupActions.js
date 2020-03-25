@@ -1,15 +1,22 @@
 import axios from "axios";
-import { GET_ERRORS } from "./types";
+import { GET_ERRORS, GET_GROUPS } from "./types";
 
 export const createGroup = (group, history) => async dispatch => {
   try {
     const res = await axios.post("http://localhost:8080/api/group", group);
-    history.pushState("/dashboard");
-    dispatch({ type: GET_ERRORS, payload: {} });
-  } catch (error) {
+    history.push("/dashboard");
+  } catch (err) {
     dispatch({
       type: GET_ERRORS,
-      payload: error.response.data
+      payload: err.response.data
     });
   }
+};
+
+export const getGroups = () => async dispatch => {
+  const res = await axios.get("http://localhost:8080/api/group/all");
+  dispatch({
+    type: GET_GROUPS,
+    payload: res.data
+  });
 };

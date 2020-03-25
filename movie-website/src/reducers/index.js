@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
 import errorRedcuer from "./errorReducer";
+import groupReducer from "./groupReducer";
 
 export default combineReducers({
-  errors: errorRedcuer
+  errors: errorRedcuer,
+  group: groupReducer
 });

@@ -1,9 +1,17 @@
 import React, { Component } from "react";
 import GroupView from "./Group/GroupView";
 import CreateGroupButton from "./Group/CreateGroupButton";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { getGroups } from "../actions/groupActions";
 
 class Dashboard extends Component {
+  componentDidMount() {
+    this.props.getGroups();
+  }
+
   render() {
+    const { groups } = this.props.group;
     return (
       <div className="groups">
         <div className="container">
@@ -15,10 +23,10 @@ class Dashboard extends Component {
 
               <br />
               <hr />
-              <GroupView />
-              {
-                // map groups here
-              }
+
+              {groups.map(group => (
+                <GroupView key={group.id} group={group} />
+              ))}
             </div>
           </div>
         </div>
@@ -27,4 +35,13 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+Dashboard.protoTypes = {
+  group: PropTypes.object.isRequired,
+  getGroups: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  group: state.group
+});
+
+export default connect(mapStateToProps, { getGroups })(Dashboard);

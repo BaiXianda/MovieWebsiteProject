@@ -19,6 +19,7 @@ class AddGroup extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  //life cycle hooks
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
@@ -43,41 +44,41 @@ class AddGroup extends Component {
     const { errors } = this.state;
 
     return (
-      <div className="project">
+      <div className="group">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h5 className="display-4 text-center">Create Project form</h5>
+              <h5 className="display-4 text-center">Create Group form</h5>
               <hr />
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <input
                     type="text"
                     className={classnames("form-control form-control-lg ", {
-                      "is-invalid": errors.description
+                      "is-invalid": errors.groupName
                     })}
-                    placeholder="Project Name"
+                    placeholder="Group Name"
                     name="groupName"
                     value={this.state.groupName}
                     onChange={this.onChange}
                   />
-                  {errors.description && (
-                    <div className="invalid-feedback">{errors.description}</div>
+                  {errors.groupName && (
+                    <div className="invalid-feedback">{errors.groupName}</div>
                   )}
                 </div>
                 <div className="form-group">
                   <input
                     type="text"
                     className={classnames("form-control form-control-lg ", {
-                      "is-invalid": errors.description
+                      "is-invalid": errors.groupID
                     })}
-                    placeholder="Unique Project ID"
+                    placeholder="Unique Group ID"
                     name="groupID"
                     value={this.state.groupID}
                     onChange={this.onChange}
                   />
-                  {errors.description && (
-                    <div className="invalid-feedback">{errors.description}</div>
+                  {errors.groupID && (
+                    <div className="invalid-feedback">{errors.groupID}</div>
                   )}
                 </div>
                 <div className="form-group">
@@ -85,7 +86,7 @@ class AddGroup extends Component {
                     className={classnames("form-control form-control-lg ", {
                       "is-invalid": errors.description
                     })}
-                    placeholder="Project Description"
+                    placeholder="Group Description"
                     name="description"
                     value={this.state.description}
                     onChange={this.onChange}
@@ -108,7 +109,7 @@ class AddGroup extends Component {
   }
 }
 
-AddGroup.protoTypes = {
+AddGroup.propTypes = {
   createGroup: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
