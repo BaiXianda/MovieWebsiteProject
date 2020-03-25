@@ -1,6 +1,7 @@
 package com.xiandabai.moviewebsite.services;
 
 import com.xiandabai.moviewebsite.domain.MovieGroup;
+import com.xiandabai.moviewebsite.exceptions.GroupIDException;
 import com.xiandabai.moviewebsite.repositories.MovieGroupRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,11 @@ public class MovieGroupService {
     MovieGroupRespository movieGroupRespository;
 
     public MovieGroup saveOrUpdateGroup(MovieGroup movieGroup) {
-        return movieGroupRespository.save(movieGroup);
+        try {
+            return movieGroupRespository.save(movieGroup);
+        } catch (Exception e) {
+            throw new GroupIDException("Group ID '" + movieGroup.getGroupID().toUpperCase() + "' already exists");
+        }
     }
 
     public MovieGroup findById(Long id) {
@@ -23,7 +28,13 @@ public class MovieGroupService {
     }
 
     public MovieGroup findByGroupID(String id) {
-        return movieGroupRespository.getByGroupID(id);
+        MovieGroup movieGroup = movieGroupRespository.getByGroupID(id);
+
+        if(movieGroup == null) {
+            throw new GroupIDException("Group ID '" + movieGroup.getGroupID().toUpperCase() + "' already exists");
+        }
+
+        return movieGroup;
     }
 
     public void deleteGroupByGroupId(String id) {
