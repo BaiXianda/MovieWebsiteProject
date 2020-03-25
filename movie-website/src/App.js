@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import AddGroup from "./components/Group/AddGroup";
 import store from "./store";
+import UpdateGroup from "./components/Group/UpdateGroup";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Header />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/addGroup" component={AddGroup} />
+          <Route exact path="/updateGroup/:id" component={UpdateGroup} />
         </div>
       </Router>
     </Provider>

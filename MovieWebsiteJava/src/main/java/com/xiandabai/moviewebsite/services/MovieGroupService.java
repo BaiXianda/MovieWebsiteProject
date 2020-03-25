@@ -17,18 +17,15 @@ public class MovieGroupService {
 
     public MovieGroup saveOrUpdateGroup(MovieGroup movieGroup) {
         try {
+            movieGroup.setGroupID(movieGroup.getGroupID().toUpperCase());
             return movieGroupRespository.save(movieGroup);
         } catch (Exception e) {
             throw new GroupIDException("Group ID '" + movieGroup.getGroupID().toUpperCase() + "' already exists");
         }
     }
 
-    public MovieGroup findById(Long id) {
-        return movieGroupRespository.getById(id);
-    }
-
     public MovieGroup findByGroupID(String id) {
-        MovieGroup movieGroup = movieGroupRespository.getByGroupID(id);
+        MovieGroup movieGroup = movieGroupRespository.findByGroupID(id.toUpperCase());
 
         if(movieGroup == null) {
             throw new GroupIDException("Group ID '" + movieGroup.getGroupID().toUpperCase() + "' already exists");
@@ -39,11 +36,6 @@ public class MovieGroupService {
 
     public void deleteGroupByGroupId(String id) {
         MovieGroup movieGroup = findByGroupID(id);
-        movieGroupRespository.delete(movieGroup);
-    }
-
-    public void deleteGroupById(Long id) {
-        MovieGroup movieGroup = findById(id);
         movieGroupRespository.delete(movieGroup);
     }
 

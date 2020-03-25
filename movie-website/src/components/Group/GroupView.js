@@ -2,8 +2,13 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { deleteGroup } from "../../actions/groupActions";
 
 class GroupView extends Component {
+  onDeleteClick = id => {
+    this.props.deleteGroup(id);
+  };
+
   render() {
     const { group } = this.props;
     return (
@@ -24,13 +29,16 @@ class GroupView extends Component {
                     <i className="fa fa-flag-checkered pr-1"> Group Board </i>
                   </li>
                 </a>
-                <Link to="/">
+                <Link to={`/updateGroup/${group.groupID}`}>
                   <li className="list-group-item update">
                     <i className="fa fa-edit pr-1"> Update Group Info</i>
                   </li>
                 </Link>
 
-                <li className="list-group-item delete">
+                <li
+                  className="list-group-item delete"
+                  onClick={this.onDeleteClick.bind(this, group.groupID)}
+                >
                   <i className="fa fa-minus-circle pr-1"> Delete Group</i>
                 </li>
               </ul>
@@ -42,4 +50,8 @@ class GroupView extends Component {
   }
 }
 
-export default GroupView;
+GroupView.protoTypes = {
+  deleteGroup: PropTypes.func.isRequired
+};
+
+export default connect(null, { deleteGroup })(GroupView);

@@ -33,8 +33,8 @@ public class MovieGroupController {
     }
 
     @GetMapping("/{groupID}")
-    public ResponseEntity<?> getGroupByGroupID(@PathVariable String id) {
-        MovieGroup movieGroup = movieGroupService.findByGroupID(id);
+    public ResponseEntity<?> getGroupByGroupID(@PathVariable String groupID) {
+        MovieGroup movieGroup = movieGroupService.findByGroupID(groupID);
 
         return new ResponseEntity<MovieGroup>(movieGroup, HttpStatus.OK);
     }
@@ -45,9 +45,9 @@ public class MovieGroupController {
     }
 
     @DeleteMapping("/{groupID}")
-    public ResponseEntity<?> deleteGroup(@PathVariable String id) {
-        movieGroupService.deleteGroupByGroupId(id);
-        return new ResponseEntity<String>("Group with ID: " + id + " is deleted", HttpStatus.OK);
+    public ResponseEntity<?> deleteGroup(@PathVariable String groupID) {
+        movieGroupService.deleteGroupByGroupId(groupID);
+        return new ResponseEntity<String>("Group with ID: " + groupID + " is deleted", HttpStatus.OK);
     }
 
 }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MovieGroupRespository extends CrudRepository<MovieGroup, Long> {
-    MovieGroup getByGroupID(String groupID);
-    MovieGroup getById(Long id);
+    MovieGroup findByGroupID(String groupID);
+
 }
