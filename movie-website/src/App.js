@@ -1,14 +1,21 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import NavBar from "./components/header/NavBar";
+import Dashboard from "./components/Dashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Header from "./components/Layout/Header";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import AddGroup from "./components/Group/AddGroup";
 
 function App() {
   return (
-    <div className="App">
-      <NavBar />
-    </div>
+    <Router>
+      <div className="App">
+        <Header />
+        <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/addGroup" component={AddGroup} />
+      </div>
+    </Router>
   );
 }
 
