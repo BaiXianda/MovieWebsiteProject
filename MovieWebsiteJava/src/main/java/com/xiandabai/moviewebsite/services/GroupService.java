@@ -18,6 +18,17 @@ public class GroupService {
         return groupRespository.save(group);
     }
 
-    
+    public Group findByGroupID(Long id) {
+        return groupRespository.getById(id);
+    }
+
+    public void deleteGroupById(Long id) {
+        Group group = findByGroupID(id);
+        groupRespository.delete(group);
+    }
+
+    public Iterable<Group> findAllGroups() {
+        return groupRespository.findAll();
+    }
 
 }
