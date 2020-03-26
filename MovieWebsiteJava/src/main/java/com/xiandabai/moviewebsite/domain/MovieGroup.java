@@ -1,8 +1,12 @@
 package com.xiandabai.moviewebsite.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class MovieGroup {
@@ -20,6 +24,10 @@ public class MovieGroup {
     @Column(updatable = false, unique = true)
     private String groupID;
     private String description;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "movieGroup")
+    @JsonIgnore
+    private List<MovieList> movieLists = new ArrayList<>();
 
     public MovieGroup() {
 
@@ -55,5 +63,13 @@ public class MovieGroup {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<MovieList> getMovieLists() {
+        return movieLists;
+    }
+
+    public void setMovieLists(List<MovieList> movieLists) {
+        this.movieLists = movieLists;
     }
 }

@@ -1,7 +1,9 @@
 package com.xiandabai.moviewebsite.services;
 
 import com.xiandabai.moviewebsite.domain.Movie;
+import com.xiandabai.moviewebsite.domain.MovieGroup;
 import com.xiandabai.moviewebsite.domain.MovieList;
+import com.xiandabai.moviewebsite.repositories.MovieGroupRespository;
 import com.xiandabai.moviewebsite.repositories.MovieListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,21 +18,31 @@ public class MovieListService {
     @Autowired
     ValidationErrorService validationErrorService;
 
-    public MovieList saveOrUpdateMovieList(MovieList movieList) {
+    @Autowired
+    MovieGroupRespository movieGroupRespository;
+
+    public MovieList saveOrUpdateMovieList(String movieGroup_id, MovieList movieList) {
+        MovieGroup movieGroup = movieGroupRespository.findByGroupID(movieGroup_id);
+        movieList.setMovieGroup(movieGroup);
+        movieList.setMovieGroupID(movieGroup_id);
         return movieListRepository.save(movieList);
     }
 
-    public MovieList findById(Long id) {
-        return movieListRepository.getById(id);
+    public MovieList findById(Long movieList_id) {
+        return movieListRepository.getById(movieList_id);
     }
 
-    public void deleteMovieById(Long id) {
-        MovieList list = findById(id);
+    public void deleteMovieById(Long movieList_id) {
+        MovieList list = findById(movieList_id);
         movieListRepository.delete(list);
     }
 
-    public Iterable<MovieList> findAllMovies() {
+    public Iterable<MovieList> findAllMovieLists() {
         return movieListRepository.findAll();
+    }
+
+    public Iterable<MovieList> findMovieListsByMovieGroupId(String movieGroupID) {
+        return movieListRepository.findByMovieGroupID(movieGroupID);
     }
 
 }

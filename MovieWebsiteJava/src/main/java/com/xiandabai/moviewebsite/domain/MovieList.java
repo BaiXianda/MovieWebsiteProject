@@ -1,5 +1,7 @@
 package com.xiandabai.moviewebsite.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
@@ -16,9 +18,15 @@ public class MovieList {
     @Column(unique = true)
     private String name;
     private String description;
+    private String movieGroupID;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "movieList")
     private List<Movie> movies = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "movieGroup_id", nullable = false)
+    @JsonIgnore
+    private MovieGroup movieGroup;
 
     public MovieList() {
 
@@ -54,5 +62,21 @@ public class MovieList {
 
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
+    }
+
+    public MovieGroup getMovieGroup() {
+        return movieGroup;
+    }
+
+    public void setMovieGroup(MovieGroup movieGroup) {
+        this.movieGroup = movieGroup;
+    }
+
+    public String getMovieGroupID() {
+        return movieGroupID;
+    }
+
+    public void setMovieGroupID(String movieGroupID) {
+        this.movieGroupID = movieGroupID;
     }
 }

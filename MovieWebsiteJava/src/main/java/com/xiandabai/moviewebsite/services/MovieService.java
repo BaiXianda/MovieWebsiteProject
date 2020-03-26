@@ -27,12 +27,12 @@ public class MovieService {
 
     }
 
-    public Movie findById(Long id) {
-        return movieRepository.getById(id);
+    public Movie findById(Long movie_id) {
+        return movieRepository.getById(movie_id);
     }
 
-    public void deleteMovieById(Long id) {
-        Movie movie = findById(id);
+    public void deleteMovieById(Long movie_id) {
+        Movie movie = findById(movie_id);
         movieRepository.delete(movie);
     }
 

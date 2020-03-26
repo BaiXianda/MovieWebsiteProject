@@ -34,6 +34,7 @@ public class MovieGroupService {
         return movieGroup;
     }
 
+
     public void deleteGroupByGroupId(String id) {
         MovieGroup movieGroup = findByGroupID(id);
         movieGroupRespository.delete(movieGroup);

@@ -1,10 +1,7 @@
 package com.xiandabai.moviewebsite.controllers;
 
-import com.xiandabai.moviewebsite.domain.Movie;
 import com.xiandabai.moviewebsite.domain.MovieList;
-import com.xiandabai.moviewebsite.repositories.MovieListRepository;
 import com.xiandabai.moviewebsite.services.MovieListService;
-import com.xiandabai.moviewebsite.services.MovieService;
 import com.xiandabai.moviewebsite.services.ValidationErrorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,15 +22,15 @@ public class MovieListController {
     @Autowired
     ValidationErrorService validationErrorService;
 
-    @PostMapping("")
-    public ResponseEntity<?> createNewMovie(@Valid @RequestBody MovieList movieList, BindingResult result) {
+    @PostMapping("/{movieGroup_id}")
+    public ResponseEntity<?> createNewMovie(@Valid @RequestBody MovieList movieList, @PathVariable String movieGroup_id, BindingResult result) {
 
         ResponseEntity<?> error = validationErrorService.MapValidationService(result);
 
         if (error != null)
             return error;
 
-        MovieList l = movieListService.saveOrUpdateMovieList(movieList);
+        MovieList l = movieListService.saveOrUpdateMovieList(movieGroup_id, movieList);
         return new ResponseEntity<MovieList>(l, HttpStatus.OK);
     }
 
@@ -50,8 +47,14 @@ public class MovieListController {
     }
 
     @GetMapping("/all")
-    public Iterable<MovieList> getAllMovies() {
-        return movieListService.findAllMovies();
+    public Iterable<MovieList> getAllMovieLists() {
+        return movieListService.findAllMovieLists();
+    }
+
+    @GetMapping("/all/{movieGroupID}")
+    public Iterable<MovieList> getAllMovieListsByMovieGroupId(@PathVariable String movieGroupID) {
+
+        return movieListService.findMovieListsByMovieGroupId(movieGroupID);
     }
 
 }

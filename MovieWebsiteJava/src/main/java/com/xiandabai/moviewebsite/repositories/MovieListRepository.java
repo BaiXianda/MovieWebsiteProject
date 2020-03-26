@@ -9,4 +9,6 @@ public interface MovieListRepository extends CrudRepository<MovieList, Long> {
     MovieList findByName(String name);
 
     MovieList getById(Long id);
+
+    Iterable<MovieList> findByMovieGroupID(String movieGroupID);
 }
