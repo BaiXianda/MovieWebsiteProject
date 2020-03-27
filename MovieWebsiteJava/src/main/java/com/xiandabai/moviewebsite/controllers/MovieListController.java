@@ -27,8 +27,10 @@ public class MovieListController {
 
         ResponseEntity<?> error = validationErrorService.MapValidationService(result);
 
-        if (error != null)
+        if (error != null) {
+            System.out.println("test");
             return error;
+        }
 
         MovieList l = movieListService.saveOrUpdateMovieList(movieGroup_id, movieList);
         return new ResponseEntity<MovieList>(l, HttpStatus.OK);

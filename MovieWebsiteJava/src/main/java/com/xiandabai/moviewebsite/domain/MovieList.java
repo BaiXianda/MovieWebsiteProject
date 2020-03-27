@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +16,8 @@ public class MovieList {
     private Long id;
 
     @NotBlank(message = "Name can not be empty")
-    @Column(unique = true)
-    private String name;
+    @Size(max = 20, message = "Can not have more than 20 characters")
+    private String movieListName;
     private String description;
     private String movieGroupID;
 
@@ -40,12 +41,12 @@ public class MovieList {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getMovieListName() {
+        return movieListName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMovieListName(String movieListName) {
+        this.movieListName = movieListName;
     }
 
     public String getDescription() {

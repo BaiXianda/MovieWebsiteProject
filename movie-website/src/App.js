@@ -8,6 +8,8 @@ import { Provider } from "react-redux";
 import AddGroup from "./components/Group/AddGroup";
 import store from "./store";
 import UpdateGroup from "./components/Group/UpdateGroup";
+import GroupBoard from "./components/Group/GroupBoard/GroupBoard";
+import AddMovieList from "./components/Group/GroupBoard/MovieList/AddMovieList";
 
 function App() {
   return (
@@ -18,6 +20,12 @@ function App() {
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/addGroup" component={AddGroup} />
           <Route exact path="/updateGroup/:id" component={UpdateGroup} />
+          <Route exact path="/groupBoard/:id" component={GroupBoard} />
+          <Route
+            exact
+            path="/groupBoard/addMovieList/:id"
+            component={AddMovieList}
+          />
         </div>
       </Router>
     </Provider>

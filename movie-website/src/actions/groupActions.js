@@ -3,12 +3,12 @@ import { GET_ERRORS, GET_GROUPS, GET_GROUP, DELETE_GROUP } from "./types";
 
 export const createGroup = (group, history) => async dispatch => {
   try {
-    const res = await axios.post("http://localhost:8080/api/group", group);
+    await axios.post("http://localhost:8080/api/group", group);
     history.push("/dashboard");
-  } catch (err) {
+  } catch (error) {
     dispatch({
       type: GET_ERRORS,
-      payload: err.response.data
+      payload: error.response.data
     });
   }
 };

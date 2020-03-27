@@ -18,10 +18,9 @@ public class MovieService {
     @Autowired
     MovieListRepository movieListRepository;
 
-    public Movie saveOrUpdateMovie(String name, Movie movie) {
-        MovieList movieList = movieListRepository.findByName(name);
+    public Movie saveOrUpdateMovie(Long id, Movie movie) {
+        MovieList movieList = movieListRepository.getById(id);
         movie.setMovieList(movieList);
-        movie.setMovieList_name(name);
 
         return movieRepository.save(movie);
 

@@ -23,14 +23,14 @@ public class MovieController {
     @Autowired
     ValidationErrorService validationErrorService;
 
-    @PostMapping("/{movieList_name}")
-    public ResponseEntity<?> createNewMovie(@PathVariable String movieList_name, @Valid @RequestBody Movie movie, BindingResult result) {
+    @PostMapping("/{movieList_id}")
+    public ResponseEntity<?> createNewMovie(@PathVariable Long movieList_id, @Valid @RequestBody Movie movie, BindingResult result) {
 
         ResponseEntity<?> error = validationErrorService.MapValidationService(result);
         if (error != null)
             return error;
 
-        Movie m = movieService.saveOrUpdateMovie(movieList_name, movie);
+        Movie m = movieService.saveOrUpdateMovie(movieList_id, movie);
         return new ResponseEntity<Movie>(m, HttpStatus.OK);
     }
 
