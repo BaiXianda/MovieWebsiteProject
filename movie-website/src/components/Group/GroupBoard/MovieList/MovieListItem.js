@@ -17,7 +17,10 @@ class MovieListItem extends Component {
         <div className="card-body bg-light">
           <h5 className="card-title">Name : {movieList.movieListName}</h5>
           <p className="card-text text-truncate ">{movieList.description}</p>
-          <Link to="" className="btn btn-primary">
+          <Link
+            to={`/groupBoard/movieListBoard/${movieList.id}`}
+            className="btn btn-primary"
+          >
             View
           </Link>
 

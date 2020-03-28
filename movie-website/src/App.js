@@ -11,6 +11,8 @@ import UpdateGroup from "./components/Group/UpdateGroup";
 import GroupBoard from "./components/Group/GroupBoard/GroupBoard";
 import AddMovieList from "./components/Group/GroupBoard/MovieList/AddMovieList";
 import UpdateMovieList from "./components/Group/GroupBoard/MovieList/UpdateMovieList";
+import MovieListBoard from "./components/Group/GroupBoard/MovieList/MovieListBoard/MovieListBoard";
+import AddMovie from "./components/Group/GroupBoard/MovieList/MovieListBoard/AddMovie";
 
 function App() {
   return (
@@ -31,6 +33,16 @@ function App() {
             exact
             path="/groupBoard/updateMovieList/:id"
             component={UpdateMovieList}
+          />
+          <Route
+            exact
+            path="/groupBoard/movieListBoard/:id"
+            component={MovieListBoard}
+          />
+          <Route
+            exact
+            path="/groupBoard/movieListBoard/addMovie/:id"
+            component={AddMovie}
           />
         </div>
       </Router>

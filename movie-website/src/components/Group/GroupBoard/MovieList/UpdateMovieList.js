@@ -74,13 +74,14 @@ class UpdateMovieList extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h4 className="display-4 text-center">Create Movie List form</h4>
               <Link
                 to={`/groupBoard/${this.state.movieGroupID}`}
                 className="btn btn-light"
               >
-                Back to Project Board
+                Back to Group Board
               </Link>
+              <h4 className="display-4 text-center">Create Movie List form</h4>
+
               <hr />
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
