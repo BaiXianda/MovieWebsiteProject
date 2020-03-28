@@ -37,14 +37,14 @@ public class MovieListController {
     }
 
     @GetMapping("/{movieList_id}")
-    public ResponseEntity<?> getMovieById(@PathVariable Long movie_id) {
-        MovieList list = movieListService.findById(movie_id);
+    public ResponseEntity<?> getMovieById(@PathVariable Long movieList_id) {
+        MovieList list = movieListService.findById(movieList_id);
         return new ResponseEntity<MovieList>(list, HttpStatus.OK);
     }
 
     @DeleteMapping("/{movieList_id}")
-    public ResponseEntity<?> deleteMovieById(@PathVariable Long movie_id) {
-        movieListService.deleteMovieById(movie_id);
+    public ResponseEntity<?> deleteMovieById(@PathVariable Long movieList_id) {
+        movieListService.deleteMovieById(movieList_id);
         return new ResponseEntity<String>("Movie is deleted", HttpStatus.OK);
     }
 

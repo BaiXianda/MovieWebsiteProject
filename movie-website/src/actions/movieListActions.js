@@ -35,7 +35,7 @@ export const getMovieLists = id => async dispatch => {
   }
 };
 
-export const getMovieList = id => async dispatch => {
+export const getMovieList = (id, history) => async dispatch => {
   try {
     const res = await axios.get(`http://localhost:8080/api/movielist/${id}`);
     dispatch({
@@ -43,16 +43,13 @@ export const getMovieList = id => async dispatch => {
       payload: res.data
     });
   } catch (error) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: error.response.data
-    });
+    history.push("/dashboard");
   }
 };
 
 export const deleteMovieList = id => async dispatch => {
   if (window.confirm("Are you sure to delete this movie list?")) {
-    await axios.delete(`http://localhost:8080/api/movieList/${id}`);
+    await axios.delete(`http://localhost:8080/api/movielist/${id}`);
     dispatch({
       type: DELETE_MOVIELIST,
       payload: id

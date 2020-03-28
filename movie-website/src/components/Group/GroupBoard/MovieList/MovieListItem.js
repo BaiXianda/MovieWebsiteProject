@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { deleteMovieList } from "../../../../actions/movieListActions";
 
 class MovieListItem extends Component {
+  onDeleteClick = id => {
+    this.props.deleteMovieList(id);
+  };
+
   render() {
     const { movieList } = this.props;
     return (
@@ -14,15 +21,27 @@ class MovieListItem extends Component {
             View
           </Link>
 
-          <Link to="" className="btn btn-info ml-4">
+          <Link
+            to={`/groupBoard/updateMovieList/${movieList.id}`}
+            className="btn btn-info ml-4"
+          >
             Update
           </Link>
 
-          <button className="btn btn-danger ml-4">Delete</button>
+          <button
+            className="btn btn-danger ml-4"
+            onClick={this.onDeleteClick.bind(this, movieList.id)}
+          >
+            Delete
+          </button>
         </div>
       </div>
     );
   }
 }
 
-export default MovieListItem;
+MovieListItem.protoTypes = {
+  deleteMovieList: PropTypes.func.isRequired
+};
+
+export default connect(null, { deleteMovieList })(MovieListItem);

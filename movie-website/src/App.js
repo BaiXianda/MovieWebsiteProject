@@ -10,6 +10,7 @@ import store from "./store";
 import UpdateGroup from "./components/Group/UpdateGroup";
 import GroupBoard from "./components/Group/GroupBoard/GroupBoard";
 import AddMovieList from "./components/Group/GroupBoard/MovieList/AddMovieList";
+import UpdateMovieList from "./components/Group/GroupBoard/MovieList/UpdateMovieList";
 
 function App() {
   return (
@@ -25,6 +26,11 @@ function App() {
             exact
             path="/groupBoard/addMovieList/:id"
             component={AddMovieList}
+          />
+          <Route
+            exact
+            path="/groupBoard/updateMovieList/:id"
+            component={UpdateMovieList}
           />
         </div>
       </Router>

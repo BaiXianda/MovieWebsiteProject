@@ -22,18 +22,20 @@ public class MovieListService {
     MovieGroupRespository movieGroupRespository;
 
     public MovieList saveOrUpdateMovieList(String movieGroup_id, MovieList movieList) {
+
         MovieGroup movieGroup = movieGroupRespository.findByGroupID(movieGroup_id);
         movieList.setMovieGroup(movieGroup);
         movieList.setMovieGroupID(movieGroup_id);
+
         return movieListRepository.save(movieList);
     }
 
-    public MovieList findById(Long movieList_id) {
-        return movieListRepository.getById(movieList_id);
+    public MovieList findById(Long id) {
+        return movieListRepository.getById(id);
     }
 
-    public void deleteMovieById(Long movieList_id) {
-        MovieList list = findById(movieList_id);
+    public void deleteMovieById(Long id) {
+        MovieList list = findById(id);
         movieListRepository.delete(list);
     }
 
