@@ -3,15 +3,18 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getMovieList } from "../../../../../actions/movieListActions";
+import { getMovies } from "../../../../../actions/movieActions";
+import MovieItem from "./MovieItem";
 
 class MovieListBoard extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.getMovieList(id, this.props.history);
+    this.props.getMovies(id);
   }
 
   render() {
-    const { id } = 1;
+    const movies = this.props.movies;
 
     return (
       <div className="movieListBoard">
@@ -19,7 +22,7 @@ class MovieListBoard extends Component {
           <div className="row">
             <div className="col-md-12">
               <Link
-                to="" //{`/groupBoard/${this.state.movieGroupID}`}
+                to={`/groupBoard/${this.props.movieList.movieGroupID}`}
                 className="btn btn-light"
               >
                 Back to Group Board
@@ -27,19 +30,20 @@ class MovieListBoard extends Component {
               <h1 className="display-4 text-center">
                 {this.props.movieList.movieListName}
               </h1>
-
               <h3 className="text-center">
                 {this.props.movieList.description}
               </h3>
               <Link
-                to={`/groupBoard/movieListBoard/addMovie/${id}`}
+                to={`/groupBoard/movieListBoard/addMovie/${this.props.movieList.id}`}
                 className="btn btn-lg btn-info"
               >
                 Add a Movie
               </Link>
               <br />
-
               <hr />
+              {movies.map(movie => (
+                <MovieItem key={movie.id} movie={movie} />
+              ))}
             </div>
           </div>
         </div>
@@ -50,11 +54,15 @@ class MovieListBoard extends Component {
 
 MovieListBoard.protoTypes = {
   getMovieList: PropTypes.func.isRequired,
-  movieList: PropTypes.object.isRequired
+  movieList: PropTypes.object.isRequired,
+  movie: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  movieList: state.movieList.movieList
+  movieList: state.movieList.movieList,
+  movies: state.movie.movies
 });
 
-export default connect(mapStateToProps, { getMovieList })(MovieListBoard);
+export default connect(mapStateToProps, { getMovieList, getMovies })(
+  MovieListBoard
+);

@@ -10,4 +10,6 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 
     @Override
     Iterable<Movie> findAll();
+
+    Iterable<Movie> findByMovieList_id(Long movieList_id);
 }

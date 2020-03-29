@@ -23,7 +23,7 @@ public class MovieListController {
     ValidationErrorService validationErrorService;
 
     @PostMapping("/{movieGroup_id}")
-    public ResponseEntity<?> createNewMovie(@Valid @RequestBody MovieList movieList, @PathVariable String movieGroup_id, BindingResult result) {
+    public ResponseEntity<?> createNewMovieList(@Valid @RequestBody MovieList movieList, @PathVariable String movieGroup_id, BindingResult result) {
 
         ResponseEntity<?> error = validationErrorService.MapValidationService(result);
 

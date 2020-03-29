@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { createMovie } from "../../../../../actions/movieActions";
 import { Link } from "react-router-dom";
+import { getMovie, createMovie } from "../../../../../actions/movieActions";
 
-class AddMovie extends Component {
+class UpdateMovie extends Component {
   constructor() {
     super();
 
     this.state = {
+      id: "",
       name: "",
       description: "",
       reviewLink: "",
@@ -25,6 +26,29 @@ class AddMovie extends Component {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
+
+    const {
+      id,
+      name,
+      description,
+      movieList_id,
+      reviewLink,
+      trailerLink
+    } = nextProps.movie;
+
+    this.setState({
+      id,
+      name,
+      description,
+      movieList_id,
+      reviewLink,
+      trailerLink
+    });
+  }
+
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    this.props.getMovie(id, this.props.history);
   }
 
   onChange(e) {
@@ -32,21 +56,22 @@ class AddMovie extends Component {
   }
 
   onSubmit(e) {
-    const { id } = this.props.match.params;
+    const { movieList_id } = this.props.match.params;
 
     e.preventDefault();
     const newMovie = {
+      id: this.state.id,
       name: this.state.name,
       description: this.state.description,
       reviewLink: this.state.reviewLink,
       trailerLink: this.state.trailerLink
     };
-    this.props.createMovie(id, newMovie, this.props.history);
+    this.props.createMovie(movieList_id, newMovie, this.props.history);
   }
 
   render() {
     const { errors } = this.state;
-    const { id } = this.props.match.params;
+    const { movieList_id } = this.props.match.params;
 
     return (
       <div className="movieList">
@@ -54,12 +79,12 @@ class AddMovie extends Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <Link
-                to={`/groupBoard/movieListBoard/${id}`}
+                to={`/groupBoard/movieListBoard/${movieList_id}`}
                 className="btn btn-light"
               >
                 Back to Movie List
               </Link>
-              <h4 className="display-4 text-center">Create Movie form</h4>
+              <h4 className="display-4 text-center">Update Movie form</h4>
               <hr />
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
@@ -133,13 +158,16 @@ class AddMovie extends Component {
   }
 }
 
-AddMovie.propTypes = {
+UpdateMovie.propTypes = {
   createMovie: PropTypes.func.isRequired,
+  getMovie: PropTypes.func.isRequired,
+  movie: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
+  movie: state.movie.movie,
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { createMovie })(AddMovie);
+export default connect(mapStateToProps, { createMovie, getMovie })(UpdateMovie);

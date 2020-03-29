@@ -78,7 +78,7 @@ class UpdateGroup extends Component {
                     value={this.state.groupName}
                     onChange={this.onChange}
                   />
-                  {errors.projectName && (
+                  {errors.groupName && (
                     <div className="invalid-feedback">{errors.groupName}</div>
                   )}
                 </div>

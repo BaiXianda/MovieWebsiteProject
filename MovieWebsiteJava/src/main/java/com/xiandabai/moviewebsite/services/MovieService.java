@@ -21,6 +21,7 @@ public class MovieService {
     public Movie saveOrUpdateMovie(Long id, Movie movie) {
         MovieList movieList = movieListRepository.getById(id);
         movie.setMovieList(movieList);
+        movie.setMovieList_id(id);
 
         return movieRepository.save(movie);
 
@@ -37,6 +38,10 @@ public class MovieService {
 
     public Iterable<Movie> findAllMovies() {
         return movieRepository.findAll();
+    }
+
+    public Iterable<Movie> findAllMoviesByMovieListId(Long movieList_id) {
+        return movieRepository.findByMovieList_id(movieList_id);
     }
 
 }

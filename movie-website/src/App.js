@@ -13,6 +13,7 @@ import AddMovieList from "./components/Group/GroupBoard/MovieList/AddMovieList";
 import UpdateMovieList from "./components/Group/GroupBoard/MovieList/UpdateMovieList";
 import MovieListBoard from "./components/Group/GroupBoard/MovieList/MovieListBoard/MovieListBoard";
 import AddMovie from "./components/Group/GroupBoard/MovieList/MovieListBoard/AddMovie";
+import UpdateMovie from "./components/Group/GroupBoard/MovieList/MovieListBoard/UpdateMovie";
 
 function App() {
   return (
@@ -43,6 +44,11 @@ function App() {
             exact
             path="/groupBoard/movieListBoard/addMovie/:id"
             component={AddMovie}
+          />
+          <Route
+            exact
+            path="/groupBoard/movieListBoard/updateMovie/:movieList_id/:id"
+            component={UpdateMovie}
           />
         </div>
       </Router>

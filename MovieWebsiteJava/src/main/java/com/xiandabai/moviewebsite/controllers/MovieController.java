@@ -51,4 +51,9 @@ public class MovieController {
         return movieService.findAllMovies();
     }
 
+    @GetMapping("/all/{movieList_id}")
+    public Iterable<Movie> getAllMoviesByMovieListId(@PathVariable Long movieList_id) {
+        return movieService.findAllMoviesByMovieListId(movieList_id);
+    }
+
 }

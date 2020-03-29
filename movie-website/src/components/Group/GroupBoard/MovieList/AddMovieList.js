@@ -3,6 +3,7 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createMovieList } from "../../../../actions/movieListActions";
+import { Link } from "react-router-dom";
 
 class AddMovieList extends Component {
   constructor() {
@@ -18,7 +19,6 @@ class AddMovieList extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  //life cycle hooks
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
@@ -42,13 +42,17 @@ class AddMovieList extends Component {
 
   render() {
     const { errors } = this.state;
+    const { id } = this.props.match.params;
 
     return (
       <div className="movieList">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h5 className="display-4 text-center">Create Movie List form</h5>
+              <Link to={`/groupBoard/${id}`} className="btn btn-light">
+                Back to Group Board
+              </Link>
+              <h4 className="display-4 text-center">Create Movie List form</h4>
               <hr />
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">

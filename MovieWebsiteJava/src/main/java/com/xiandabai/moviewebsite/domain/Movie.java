@@ -21,9 +21,9 @@ public class Movie {
     private String reviewLink;
 
     @Column(updatable = false)
-    private String movieList_name;
+    private Long list_id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movieList_id", nullable = false)
     @JsonIgnore
     private MovieList movieList;
@@ -80,11 +80,11 @@ public class Movie {
         this.movieList = movieList;
     }
 
-    public String getMovieList_name() {
-        return movieList_name;
+    public Long getMovieList_id() {
+        return list_id;
     }
 
-    public void setMovieList_name(String movieList_name) {
-        this.movieList_name = movieList_name;
+    public void setMovieList_id(Long movieList_id) {
+        this.list_id = movieList_id;
     }
 }
