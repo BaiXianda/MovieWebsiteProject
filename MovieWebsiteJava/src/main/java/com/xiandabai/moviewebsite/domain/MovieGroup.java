@@ -6,7 +6,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class MovieGroup {
@@ -28,6 +30,12 @@ public class MovieGroup {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "movieGroup")
     @JsonIgnore
     private List<MovieList> movieLists = new ArrayList<>();
+
+    private String moderator;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<User> users = new HashSet<>();
 
     public MovieGroup() {
 

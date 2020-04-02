@@ -22,6 +22,7 @@ public class MovieList {
     private String movieGroupID;
 
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "movieList", orphanRemoval = true)
+    @JsonIgnore
     private List<Movie> movies = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
