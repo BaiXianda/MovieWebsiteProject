@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Table(name = "moviegroups")
 public class MovieGroup {
 
     @Id
@@ -33,7 +34,9 @@ public class MovieGroup {
 
     private String moderator;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "user_id", referencedColumnName = "username",
+//            nullable = false)
     @JsonIgnore
     private Set<User> users = new HashSet<>();
 

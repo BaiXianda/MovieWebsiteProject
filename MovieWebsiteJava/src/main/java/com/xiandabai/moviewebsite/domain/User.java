@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.*;
 
 @Entity
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +27,9 @@ public class User implements UserDetails {
     @Transient
     private String confirmPassword;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+//    @JoinColumn(name = "movie_group_id", referencedColumnName = "groupID",
+//                nullable = false)
     private Set<MovieGroup> movieGroups = new HashSet<>();
 
     public User() {
