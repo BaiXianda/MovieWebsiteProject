@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/movielist")
@@ -23,7 +24,7 @@ public class MovieListController {
     ValidationErrorService validationErrorService;
 
     @PostMapping("/{movieGroup_id}")
-    public ResponseEntity<?> createNewMovieList(@Valid @RequestBody MovieList movieList, @PathVariable String movieGroup_id, BindingResult result) {
+    public ResponseEntity<?> createNewMovieList(@Valid @RequestBody MovieList movieList, @PathVariable String movieGroup_id, BindingResult result, Principal principal) {
 
         ResponseEntity<?> error = validationErrorService.MapValidationService(result);
 

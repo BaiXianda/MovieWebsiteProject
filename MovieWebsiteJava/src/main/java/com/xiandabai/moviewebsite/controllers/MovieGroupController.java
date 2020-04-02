@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/group")
@@ -23,12 +24,12 @@ public class MovieGroupController {
     private ValidationErrorService validationErrorService;
 
     @PostMapping("")
-    public ResponseEntity<?> createNewGroup(@Valid @RequestBody MovieGroup movieGroup, BindingResult result) {
+    public ResponseEntity<?> createNewGroup(@Valid @RequestBody MovieGroup movieGroup, BindingResult result, Principal principal) {
         ResponseEntity<?> errorMap = validationErrorService.MapValidationService(result);
         if(errorMap != null)
             return errorMap;
 
-        MovieGroup newMovieGroup = movieGroupService.saveOrUpdateGroup(movieGroup);
+        MovieGroup newMovieGroup = movieGroupService.saveOrUpdateGroup(movieGroup, principal.getName());
         return new ResponseEntity<MovieGroup>(newMovieGroup, HttpStatus.CREATED);
     }
 

@@ -27,7 +27,7 @@ public class User implements UserDetails {
     private String confirmPassword;
 
     @ManyToMany
-    private Set<MovieGroup> projects = new HashSet<>();
+    private Set<MovieGroup> movieGroups = new HashSet<>();
 
     public User() {
 
@@ -101,6 +101,14 @@ public class User implements UserDetails {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public Set<MovieGroup> getMovieGroups() {
+        return movieGroups;
+    }
+
+    public void setMovieGroups(Set<MovieGroup> movieGroups) {
+        this.movieGroups = movieGroups;
     }
 }
 

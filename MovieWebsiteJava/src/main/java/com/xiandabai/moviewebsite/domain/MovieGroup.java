@@ -80,4 +80,20 @@ public class MovieGroup {
     public void setMovieLists(List<MovieList> movieLists) {
         this.movieLists = movieLists;
     }
+
+    public String getModerator() {
+        return moderator;
+    }
+
+    public void setModerator(String moderator) {
+        this.moderator = moderator;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
 }
