@@ -3,10 +3,12 @@ import errorRedcuer from "./errorReducer";
 import groupReducer from "./groupReducer";
 import movieListReducer from "./movieListReducer";
 import movieReducer from "./movieReducer";
+import securityReducer from "./securityReducer";
 
 export default combineReducers({
   errors: errorRedcuer,
   group: groupReducer,
   movieList: movieListReducer,
-  movie: movieReducer
+  movie: movieReducer,
+  security: securityReducer
 });

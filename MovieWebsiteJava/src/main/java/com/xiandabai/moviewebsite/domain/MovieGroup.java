@@ -37,7 +37,7 @@ public class MovieGroup {
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 //    @JoinColumn(name = "user_id", referencedColumnName = "username",
 //            nullable = false)
-    @JsonIgnore
+    @JsonIgnore()
     private Set<User> users = new HashSet<>();
 
     public MovieGroup() {

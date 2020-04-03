@@ -10,3 +10,5 @@ export const DELETE_MOVIELIST = "DELETE_MOVIELIST";
 export const GET_MOVIES = "GET_MOVIES";
 export const GET_MOVIE = "GET_MOVIE";
 export const DELETE_MOVIE = "DELETE_MOVIE";
+
+export const SET_CURRENT_USER = "SET_CURRENT_USER";

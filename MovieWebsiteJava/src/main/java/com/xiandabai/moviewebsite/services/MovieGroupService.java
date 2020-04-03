@@ -40,7 +40,7 @@ public class MovieGroupService {
 
             movieGroup.setGroupID(movieGroup.getGroupID().toUpperCase());
             movieGroup.setModerator(username);
-            //movieGroup.getUsers().add(user);
+            movieGroup.getUsers().add(user);
 
             return movieGroupRespository.save(movieGroup);
         } catch (Exception e) {
@@ -66,6 +66,13 @@ public class MovieGroupService {
 
     public Iterable<MovieGroup> findAllGroups() {
         return movieGroupRespository.findAll();
+    }
+
+    public Iterable<MovieGroup> findGroups(String username) {
+
+        User user = userRepository.findByUsername(username);
+
+        return user.getMovieGroups();
     }
 
 }

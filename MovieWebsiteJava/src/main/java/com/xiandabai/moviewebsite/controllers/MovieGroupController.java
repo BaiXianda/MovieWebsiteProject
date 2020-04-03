@@ -51,4 +51,10 @@ public class MovieGroupController {
         return new ResponseEntity<String>("Group with ID: " + groupID + " is deleted", HttpStatus.OK);
     }
 
+    @GetMapping("/groups")
+    public Iterable<MovieGroup> getGroups(Principal principal) {
+
+        return movieGroupService.findAllGroups();
+    }
+
 }
