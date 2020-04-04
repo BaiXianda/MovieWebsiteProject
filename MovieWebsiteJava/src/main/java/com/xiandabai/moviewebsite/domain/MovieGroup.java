@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "moviegroups")
 public class MovieGroup {
 
     @Id
@@ -28,7 +27,7 @@ public class MovieGroup {
     private String groupID;
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "movieGroup")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "movieGroup", orphanRemoval = true)
     @JsonIgnore
     private List<MovieList> movieLists = new ArrayList<>();
 

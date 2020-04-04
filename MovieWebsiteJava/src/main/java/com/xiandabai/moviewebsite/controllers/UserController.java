@@ -1,8 +1,10 @@
 package com.xiandabai.moviewebsite.controllers;
 
+
 import com.xiandabai.moviewebsite.domain.User;
 import com.xiandabai.moviewebsite.payload.JWTLoginSuccessResponse;
 import com.xiandabai.moviewebsite.payload.LoginRequest;
+import com.xiandabai.moviewebsite.repositories.UserRepository;
 import com.xiandabai.moviewebsite.security.JwtTokenProvider;
 import com.xiandabai.moviewebsite.services.UserService;
 import com.xiandabai.moviewebsite.services.ValidationErrorService;
@@ -41,6 +43,10 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    UserRepository userRepository;
+
+
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result) {
         ResponseEntity<?> errorMap = validationErrorService.MapValidationService(result);
@@ -72,5 +78,10 @@ public class UserController {
         return new ResponseEntity<User>(newUser, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{username}")
+    public User getUsers(@PathVariable String username) {
+
+        return userRepository.findByUsername(username);
+    }
 
 }

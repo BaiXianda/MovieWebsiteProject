@@ -27,9 +27,13 @@ public class User implements UserDetails {
     @Transient
     private String confirmPassword;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
+    private Set<Invitation> invitations = new HashSet<>();
+
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
 //    @JoinColumn(name = "movie_group_id", referencedColumnName = "groupID",
 //                nullable = false)
+    @JsonIgnore
     private Set<MovieGroup> movieGroups = new HashSet<>();
 
     public User() {
@@ -112,6 +116,14 @@ public class User implements UserDetails {
 
     public void setMovieGroups(Set<MovieGroup> movieGroups) {
         this.movieGroups = movieGroups;
+    }
+
+    public Set<Invitation> getInvitations() {
+        return invitations;
+    }
+
+    public void setInvitations(Set<Invitation> invitations) {
+        this.invitations = invitations;
     }
 }
 

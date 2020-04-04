@@ -16,6 +16,24 @@ class MovieListBoard extends Component {
   render() {
     const movies = this.props.movies;
 
+    const currentUser = this.props.currentUser;
+    const moderator = this.props.moderator;
+
+    let create;
+
+    if (currentUser === moderator) {
+      create = (
+        <Link
+          to={`/groupBoard/movieListBoard/addMovie/${this.props.movieList.id}`}
+          className="btn btn-lg btn-info"
+        >
+          Add a Movie
+        </Link>
+      );
+    } else {
+      create = "";
+    }
+
     return (
       <div className="movieListBoard">
         <div className="container">
@@ -33,15 +51,10 @@ class MovieListBoard extends Component {
               <h3 className="text-center">
                 {this.props.movieList.description}
               </h3>
-              <Link
-                to={`/groupBoard/movieListBoard/addMovie/${this.props.movieList.id}`}
-                className="btn btn-lg btn-info"
-              >
-                Add a Movie
-              </Link>
+              {create}
               <br />
               <hr />
-              {movies.map(movie => (
+              {movies.map((movie) => (
                 <MovieItem key={movie.id} movie={movie} />
               ))}
             </div>
@@ -55,12 +68,16 @@ class MovieListBoard extends Component {
 MovieListBoard.protoTypes = {
   getMovieList: PropTypes.func.isRequired,
   movieList: PropTypes.object.isRequired,
-  movie: PropTypes.object.isRequired
+  movie: PropTypes.object.isRequired,
+  moderator: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   movieList: state.movieList.movieList,
-  movies: state.movie.movies
+  movies: state.movie.movies,
+  moderator: state.group.group.moderator,
+  currentUser: state.security.user.username,
 });
 
 export default connect(mapStateToProps, { getMovieList, getMovies })(

@@ -6,6 +6,7 @@ import com.xiandabai.moviewebsite.services.ValidationErrorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,7 @@ public class MovieGroupController {
 
     @Autowired
     private ValidationErrorService validationErrorService;
+
 
     @PostMapping("")
     public ResponseEntity<?> createNewGroup(@Valid @RequestBody MovieGroup movieGroup, BindingResult result, Principal principal) {
@@ -54,7 +56,20 @@ public class MovieGroupController {
     @GetMapping("/groups")
     public Iterable<MovieGroup> getGroups(Principal principal) {
 
-        return movieGroupService.findAllGroups();
+        return movieGroupService.findGroups(principal.getName());
+    }
+
+    @PostMapping("/addUser/{invitation_id}")
+    public ResponseEntity<?> addNewUserToGroup(@PathVariable Long invitation_id) {
+        movieGroupService.addUser(invitation_id);
+        return new ResponseEntity<String>("The user is add to the group", HttpStatus.OK);
+    }
+
+    @PostMapping("/inviteUser/{username}/{movieGroupId}")
+    public ResponseEntity<?> inviteUserToGroup(@PathVariable String username, @PathVariable String movieGroupId, Principal principal) {
+
+        movieGroupService.inviteUser(username, movieGroupId, principal.getName());
+        return new ResponseEntity<String>("Invitation is send", HttpStatus.OK);
     }
 
 }

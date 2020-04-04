@@ -5,12 +5,39 @@ import { connect } from "react-redux";
 import { deleteGroup } from "../../actions/groupActions";
 
 class GroupView extends Component {
-  onDeleteClick = id => {
+  onDeleteClick = (id) => {
     this.props.deleteGroup(id);
   };
 
   render() {
     const { group } = this.props;
+
+    const currentUser = this.props.currentUser;
+    const moderator = group.moderator;
+
+    let create;
+
+    if (currentUser === moderator) {
+      create = (
+        <React.Fragment>
+          <Link to={`/updateGroup/${group.groupID}`}>
+            <li className="list-group-item update">
+              <i className="fa fa-edit pr-1"> Update Group Info</i>
+            </li>
+          </Link>
+
+          <li
+            className="list-group-item delete"
+            onClick={this.onDeleteClick.bind(this, group.groupID)}
+          >
+            <i className="fa fa-minus-circle pr-1"> Delete Group</i>
+          </li>
+        </React.Fragment>
+      );
+    } else {
+      create = "";
+    }
+
     return (
       <div className="container">
         <div className="card card-body bg-light mb-3">
@@ -29,18 +56,7 @@ class GroupView extends Component {
                     <i className="fa fa-flag-checkered pr-1"> Group Board </i>
                   </li>
                 </Link>
-                <Link to={`/updateGroup/${group.groupID}`}>
-                  <li className="list-group-item update">
-                    <i className="fa fa-edit pr-1"> Update Group Info</i>
-                  </li>
-                </Link>
-
-                <li
-                  className="list-group-item delete"
-                  onClick={this.onDeleteClick.bind(this, group.groupID)}
-                >
-                  <i className="fa fa-minus-circle pr-1"> Delete Group</i>
-                </li>
+                {create}
               </ul>
             </div>
           </div>
@@ -51,7 +67,12 @@ class GroupView extends Component {
 }
 
 GroupView.protoTypes = {
-  deleteGroup: PropTypes.func.isRequired
+  deleteGroup: PropTypes.func.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };
 
-export default connect(null, { deleteGroup })(GroupView);
+const mapStateToProps = (state) => ({
+  currentUser: state.security.user.username,
+});
+
+export default connect(mapStateToProps, { deleteGroup })(GroupView);

@@ -17,6 +17,34 @@ class GroupBoard extends Component {
   render() {
     const { id } = this.props.match.params;
     const { movieLists } = this.props.movieList;
+    const currentUser = this.props.security.user.username;
+    const moderator = this.props.group.moderator;
+
+    let create;
+
+    if (currentUser === moderator) {
+      create = (
+        <React.Fragment>
+          <Link
+            to={`/groupBoard/addMovieList/${id}`}
+            className="btn btn-info btn-lg"
+          >
+            <i className="fas fa-plus-circle"> Create Movie List</i>
+          </Link>
+
+          <hr />
+
+          <Link
+            to={`/groupBoard/inviteUser/${moderator}/${this.props.group.groupID}`}
+            className="btn btn-info btn-lg"
+          >
+            <i className="fas fa-plus-circle"> Invite User Into Group</i>
+          </Link>
+        </React.Fragment>
+      );
+    } else {
+      create = "";
+    }
 
     return (
       <div className="groupBoard">
@@ -40,21 +68,14 @@ class GroupBoard extends Component {
                 <Tab eventKey="movieLists" title="Movie Lists">
                   <div className="row mt-4">
                     <div className="col-md">
-                      {movieLists.map(movieList => (
+                      {movieLists.map((movieList) => (
                         <MovieListItem
                           key={movieList.id}
                           movieList={movieList}
                         />
                       ))}
                     </div>
-                    <div className="col-md ">
-                      <Link
-                        to={`/groupBoard/addMovieList/${id}`}
-                        className="btn btn-info btn-lg"
-                      >
-                        <i className="fas fa-plus-circle"> Create Movie List</i>
-                      </Link>
-                    </div>
+                    <div className="col-md ">{create}</div>
                   </div>
                 </Tab>
                 <Tab eventKey="currentEvents" title="Current Events">
@@ -76,12 +97,14 @@ GroupBoard.protoTypes = {
   group: PropTypes.object.isRequired,
   getGroup: PropTypes.func.isRequired,
   getMovieLists: PropTypes.func.isRequired,
-  movieList: PropTypes.object.isRequired
+  movieList: PropTypes.object.isRequired,
+  security: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   group: state.group.group,
-  movieList: state.movieList
+  movieList: state.movieList,
+  security: state.security,
 });
 
 export default connect(mapStateToProps, { getGroup, getMovieLists })(

@@ -22,6 +22,7 @@ import { SET_CURRENT_USER } from "./actions/types";
 import { logout } from "./actions/securityActions";
 import SecuredRoute from "./securityUtils/SecureRoute";
 import Login from "./components/UserManagement/Login";
+import InvitePage from "./components/Group/GroupBoard/InvitePage";
 
 const jwtToken = localStorage.jwtToken;
 
@@ -30,7 +31,7 @@ if (jwtToken) {
   const decoded = jwt_decode(jwtToken);
   store.dispatch({
     type: SET_CURRENT_USER,
-    payload: decoded
+    payload: decoded,
   });
 
   const currentTime = Date.now() / 1000;
@@ -84,6 +85,11 @@ function App() {
               exact
               path="/groupBoard/movieListBoard/updateMovie/:movieList_id/:id"
               component={UpdateMovie}
+            />
+            <SecuredRoute
+              exact
+              path="/groupBoard/inviteUser/:username/:groupID"
+              component={InvitePage}
             />
           </Switch>
         </div>
