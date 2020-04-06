@@ -1,8 +1,6 @@
 package com.xiandabai.moviewebsite.services;
 
-import com.xiandabai.moviewebsite.domain.Invitation;
-import com.xiandabai.moviewebsite.domain.MovieGroup;
-import com.xiandabai.moviewebsite.domain.User;
+import com.xiandabai.moviewebsite.domain.*;
 import com.xiandabai.moviewebsite.exceptions.GroupIDException;
 import com.xiandabai.moviewebsite.exceptions.UsernameAlreadyExistsException;
 import com.xiandabai.moviewebsite.repositories.InvitationRepository;
@@ -10,6 +8,9 @@ import com.xiandabai.moviewebsite.repositories.MovieGroupRespository;
 import com.xiandabai.moviewebsite.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MovieGroupService {
@@ -114,6 +115,22 @@ public class MovieGroupService {
         invitation.setUser(userToAdd);
 
         invitationRepository.save(invitation);
+    }
+
+    public ArrayList<Movie> searchMovies(String movieName, String groupID) {
+        ArrayList<Movie> movieFind = new ArrayList<>();
+        MovieGroup movieGroup = movieGroupRespository.findByGroupID(groupID);
+        List<MovieList> movieLists = movieGroup.getMovieLists();
+
+        for(MovieList list: movieLists) {
+            List<Movie> movies = list.getMovies();
+            for(Movie movie: movies) {
+                if(movie.getName().toUpperCase().equals(movieName.toUpperCase()))
+                    movieFind.add(movie);
+            }
+        }
+
+        return movieFind;
     }
 
 }

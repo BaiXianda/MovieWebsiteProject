@@ -23,6 +23,7 @@ import { logout } from "./actions/securityActions";
 import SecuredRoute from "./securityUtils/SecureRoute";
 import Login from "./components/UserManagement/Login";
 import InvitePage from "./components/Group/GroupBoard/InvitePage";
+import SearchPage from "./components/Group/GroupBoard/SearchPage";
 
 const jwtToken = localStorage.jwtToken;
 
@@ -90,6 +91,11 @@ function App() {
               exact
               path="/groupBoard/inviteUser/:username/:groupID"
               component={InvitePage}
+            />
+            <SecuredRoute
+              exact
+              path="/groupBoard/searchPage/:groupID"
+              component={SearchPage}
             />
           </Switch>
         </div>

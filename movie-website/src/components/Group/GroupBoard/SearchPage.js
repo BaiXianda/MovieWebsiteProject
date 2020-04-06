@@ -3,14 +3,15 @@ import { Link } from "react-router-dom";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { inviteUser } from "../../../actions/groupActions";
+import { searchMovies, clearState } from "../../../actions/movieActions";
+import MovieItem from "./MovieList/MovieListBoard/MovieItem";
 
-class InvitePage extends Component {
+class SearchPage extends Component {
   constructor() {
     super();
 
     this.state = {
-      username: "",
+      moviename: "",
       errors: {},
     };
 
@@ -25,6 +26,10 @@ class InvitePage extends Component {
     }
   }
 
+  componentWillMount() {
+    this.props.clearState();
+  }
+
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -34,67 +39,69 @@ class InvitePage extends Component {
 
     const { groupID } = this.props.match.params;
 
-    const invitation = {
-      username: this.state.username,
-      groupId: groupID,
-    };
-
-    this.props.inviteUser(invitation, this.props.history);
+    this.props.searchMovies(this.state.moviename, groupID);
   }
 
   render() {
     const { errors } = this.state;
     const { groupID } = this.props.match.params;
+    const movies = this.props.movie.movies;
 
     return (
-      <div className="invite">
+      <div className="Search Movie">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
               <Link to={`/groupBoard/${groupID}`} className="btn btn-light">
                 Back to Group Board
               </Link>
-              <h4 className="display-4 text-center">
-                Invite a user to the group
-              </h4>
+              <h4 className="display-4 text-center">Search Movie</h4>
               <hr />
               <form onSubmit={this.onSubmit}>
-                <div className="form-group">
+                <div className="form-group ">
                   <input
-                    type="email"
+                    type="text"
                     className={classnames("form-control form-control-lg ", {
-                      "is-invalid": errors.username,
+                      "is-invalid": errors.moviename,
                     })}
-                    placeholder="User Name"
-                    name="username"
-                    value={this.state.username}
+                    placeholder="Type Here"
+                    name="moviename"
+                    value={this.state.moviename}
                     onChange={this.onChange}
                   />
-                  {errors.username && (
-                    <div className="invalid-feedback">{errors.username}</div>
+                  {errors.moviename && (
+                    <div className="invalid-feedback">{errors.moviename}</div>
                   )}
                 </div>
 
-                <input
-                  type="submit"
-                  className="btn btn-primary btn-block mt-4"
-                />
+                <button type="submit" className="btn btn-primary btn-lg">
+                  Search
+                </button>
               </form>
             </div>
           </div>
+          <hr />
+          {movies.map((movie) => (
+            <MovieItem key={movie.id} movie={movie} />
+          ))}
         </div>
       </div>
     );
   }
 }
 
-InvitePage.propTypes = {
-  inviteUser: PropTypes.func.isRequired,
+SearchPage.propTypes = {
+  searchMovies: PropTypes.func.isRequired,
+  movie: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
+  clearState: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  movie: state.movie,
   errors: state.errors,
 });
 
-export default connect(mapStateToProps, { inviteUser })(InvitePage);
+export default connect(mapStateToProps, { searchMovies, clearState })(
+  SearchPage
+);

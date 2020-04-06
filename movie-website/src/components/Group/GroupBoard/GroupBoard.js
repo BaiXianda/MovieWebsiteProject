@@ -75,7 +75,16 @@ class GroupBoard extends Component {
                         />
                       ))}
                     </div>
-                    <div className="col-md ">{create}</div>
+                    <div className="col-md ">
+                      <Link
+                        to={`/groupBoard/searchPage/${id}`}
+                        className="btn btn-info btn-lg"
+                      >
+                        <i className="fas fa-search"> Search Movie</i>
+                      </Link>
+                      <hr />
+                      {create}
+                    </div>
                   </div>
                 </Tab>
                 <Tab eventKey="currentEvents" title="Current Events">

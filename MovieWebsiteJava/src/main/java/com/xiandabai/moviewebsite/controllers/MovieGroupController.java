@@ -1,6 +1,7 @@
 package com.xiandabai.moviewebsite.controllers;
 
 import com.xiandabai.moviewebsite.domain.Invitation;
+import com.xiandabai.moviewebsite.domain.Movie;
 import com.xiandabai.moviewebsite.domain.MovieGroup;
 import com.xiandabai.moviewebsite.services.MovieGroupService;
 import com.xiandabai.moviewebsite.services.ValidationErrorService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/group")
@@ -74,6 +76,12 @@ public class MovieGroupController {
 
         movieGroupService.inviteUser(invitation, principal.getName());
         return new ResponseEntity<String>("Invitation is send", HttpStatus.OK);
+    }
+
+    @GetMapping("/searchMovies/{movie_name}/{group_id}")
+    public ResponseEntity<?> searchMovies(@PathVariable String movie_name, @PathVariable String group_id) {
+        ArrayList<Movie> movies = movieGroupService.searchMovies(movie_name, group_id);
+        return new ResponseEntity<ArrayList<Movie>>(movies, HttpStatus.OK);
     }
 
 }
