@@ -3,12 +3,16 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logout } from "../../actions/securityActions";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
+import Message from "./Message";
 
 class Header extends Component {
   logout() {
     this.props.logout();
     window.location.href = "/";
   }
+
   render() {
     const { validToken, user } = this.props.security;
 
@@ -37,6 +41,19 @@ class Header extends Component {
             >
               Logout
             </Link>
+          </li>
+          <li className="nav-item">
+            <DropdownButton
+              id="dropdown-item-button"
+              className="fas fa-bell"
+              variant="primary"
+              title="Message"
+              size="sm"
+            >
+              <Dropdown.Item>
+                <Message />
+              </Dropdown.Item>
+            </DropdownButton>
           </li>
         </ul>
       </div>
@@ -90,11 +107,11 @@ class Header extends Component {
 
 Header.propTypes = {
   logout: PropTypes.func.isRequired,
-  security: PropTypes.object.isRequired
+  security: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  security: state.security
+const mapStateToProps = (state) => ({
+  security: state.security,
 });
 
 export default connect(mapStateToProps, { logout })(Header);

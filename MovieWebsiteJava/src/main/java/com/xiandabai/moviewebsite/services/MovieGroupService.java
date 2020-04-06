@@ -4,11 +4,11 @@ import com.xiandabai.moviewebsite.domain.Invitation;
 import com.xiandabai.moviewebsite.domain.MovieGroup;
 import com.xiandabai.moviewebsite.domain.User;
 import com.xiandabai.moviewebsite.exceptions.GroupIDException;
+import com.xiandabai.moviewebsite.exceptions.UsernameAlreadyExistsException;
 import com.xiandabai.moviewebsite.repositories.InvitationRepository;
 import com.xiandabai.moviewebsite.repositories.MovieGroupRespository;
 import com.xiandabai.moviewebsite.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -89,29 +89,27 @@ public class MovieGroupService {
         movieGroupRespository.save(movieGroup);
     }
 
-    public void inviteUser(String username, String movieGroupId, String owner) {
-        User userToAdd = userRepository.findByUsername(username);
+    public void inviteUser(Invitation invitation, String owner) {
+        User userToAdd = userRepository.findByUsername(invitation.getUsername());
         if(userToAdd == null) {
-            throw new UsernameNotFoundException("Invalid username");
+            throw new UsernameAlreadyExistsException("Username not found");
         }
 
         Iterable<Invitation> check = userToAdd.getInvitations();
         for (Invitation i: check) {
-            if(i.getGroupId().equals(movieGroupId)) {
-                throw new RuntimeException("Already send the invitation");
+            if(i.getGroupId().equals(invitation.getGroupId())) {
+                throw new UsernameAlreadyExistsException("Already send the invitation");
             }
         }
 
-        Iterable<User> users = movieGroupRespository.findByGroupID(movieGroupId).getUsers();
+        Iterable<User> users = movieGroupRespository.findByGroupID(invitation.getGroupId()).getUsers();
         for(User u: users) {
-            if(u.getUsername().equals(username))
-                throw new RuntimeException("The user is already in the group");
+            if(u.getUsername().equals(invitation.getUsername()))
+                throw new UsernameAlreadyExistsException("User is already in the group");
         }
 
         User userWhoInvite = userRepository.findByUsername(owner);
-        Invitation invitation = new Invitation();
         invitation.setInviterName(userWhoInvite.getFullName());
-        invitation.setGroupId(movieGroupId);
         invitation.setInviterEmail(userWhoInvite.getUsername());
         invitation.setUser(userToAdd);
 

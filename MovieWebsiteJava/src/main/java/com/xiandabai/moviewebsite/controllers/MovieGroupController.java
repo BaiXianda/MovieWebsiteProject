@@ -1,5 +1,6 @@
 package com.xiandabai.moviewebsite.controllers;
 
+import com.xiandabai.moviewebsite.domain.Invitation;
 import com.xiandabai.moviewebsite.domain.MovieGroup;
 import com.xiandabai.moviewebsite.services.MovieGroupService;
 import com.xiandabai.moviewebsite.services.ValidationErrorService;
@@ -65,10 +66,13 @@ public class MovieGroupController {
         return new ResponseEntity<String>("The user is add to the group", HttpStatus.OK);
     }
 
-    @PostMapping("/inviteUser/{username}/{movieGroupId}")
-    public ResponseEntity<?> inviteUserToGroup(@PathVariable String username, @PathVariable String movieGroupId, Principal principal) {
+    @PostMapping("/inviteUser")
+    public ResponseEntity<?> inviteUserToGroup(@Valid @RequestBody Invitation invitation, BindingResult result, Principal principal) {
+        ResponseEntity<?> errorMap = validationErrorService.MapValidationService(result);
+        if(errorMap != null)
+            return errorMap;
 
-        movieGroupService.inviteUser(username, movieGroupId, principal.getName());
+        movieGroupService.inviteUser(invitation, principal.getName());
         return new ResponseEntity<String>("Invitation is send", HttpStatus.OK);
     }
 

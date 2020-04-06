@@ -47,14 +47,18 @@ export const deleteGroup = (id) => async (dispatch) => {
   }
 };
 
-export const inviteUser = (username, groupID, history) => async (dispatch) => {
+export const inviteUser = (inviation, history) => async (dispatch) => {
   try {
-    await axios.post(`/api/group/${username}/${groupID}`);
-    history.push(`/groupBoard/${groupID}`);
+    await axios.post("http://localhost:8080/api/group/inviteUser", inviation);
+    history.push(`/groupBoard/${inviation.groupID}`);
+    dispatch({
+      type: GET_ERRORS,
+      payload: {},
+    });
   } catch (error) {
     dispatch({
       type: GET_ERRORS,
-      payload: error.payload,
+      payload: error.response.data,
     });
   }
 };

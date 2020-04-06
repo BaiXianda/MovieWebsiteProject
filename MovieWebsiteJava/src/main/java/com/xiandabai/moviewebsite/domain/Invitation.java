@@ -13,14 +13,13 @@ public class Invitation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+
     private String inviterEmail;
-    @NotBlank
+    @NotBlank(message = "must have a group id")
     private String groupId;
-    @NotBlank
     private String inviterName;
-//    @NotBlank
-//    private String receiverEmail;
+    @NotBlank(message = "must enter an email")
+    private String username;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
@@ -70,11 +69,11 @@ public class Invitation {
         this.user = user;
     }
 
-//    public String getReceiverEmail() {
-//        return receiverEmail;
-//    }
-//
-//    public void setReceiverEmail(String receiverEmail) {
-//        this.receiverEmail = receiverEmail;
-//    }
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

@@ -14,7 +14,7 @@ class AddMovie extends Component {
       description: "",
       reviewLink: "",
       trailerLink: "",
-      errors: {}
+      errors: {},
     };
 
     this.onChange = this.onChange.bind(this);
@@ -39,7 +39,7 @@ class AddMovie extends Component {
       name: this.state.name,
       description: this.state.description,
       reviewLink: this.state.reviewLink,
-      trailerLink: this.state.trailerLink
+      trailerLink: this.state.trailerLink,
     };
     this.props.createMovie(id, newMovie, this.props.history);
   }
@@ -66,7 +66,7 @@ class AddMovie extends Component {
                   <input
                     type="text"
                     className={classnames("form-control form-control-lg ", {
-                      "is-invalid": errors.name
+                      "is-invalid": errors.name,
                     })}
                     placeholder="Movie Name"
                     name="name"
@@ -80,7 +80,7 @@ class AddMovie extends Component {
                 <div className="form-group">
                   <textarea
                     className={classnames("form-control form-control-lg ", {
-                      "is-invalid": errors.description
+                      "is-invalid": errors.description,
                     })}
                     placeholder="Movie Description"
                     name="description"
@@ -92,10 +92,11 @@ class AddMovie extends Component {
                   )}
                 </div>
                 <div className="form-group">
-                  <textarea
+                  <input
                     className={classnames("form-control form-control-lg ", {
-                      "is-invalid": errors.reviewLink
+                      "is-invalid": errors.reviewLink,
                     })}
+                    type="url"
                     placeholder="Movie ReviewLink"
                     name="reviewLink"
                     value={this.state.reviewLink}
@@ -106,10 +107,11 @@ class AddMovie extends Component {
                   )}
                 </div>
                 <div className="form-group">
-                  <textarea
+                  <input
                     className={classnames("form-control form-control-lg ", {
-                      "is-invalid": errors.trailerLink
+                      "is-invalid": errors.trailerLink,
                     })}
+                    type="url"
                     placeholder="MovieList TrailerLink"
                     name="trailerLink"
                     value={this.state.trailerLink}
@@ -135,11 +137,11 @@ class AddMovie extends Component {
 
 AddMovie.propTypes = {
   createMovie: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  errors: state.errors
+const mapStateToProps = (state) => ({
+  errors: state.errors,
 });
 
 export default connect(mapStateToProps, { createMovie })(AddMovie);

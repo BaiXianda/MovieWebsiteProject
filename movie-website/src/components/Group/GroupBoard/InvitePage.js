@@ -10,7 +10,8 @@ class InvitePage extends Component {
     super();
 
     this.state = {
-      name: "",
+      username: "",
+      errors: {},
     };
 
     this.onChange = this.onChange.bind(this);
@@ -33,7 +34,12 @@ class InvitePage extends Component {
 
     const { groupID } = this.props.match.params;
 
-    this.props.inviteUser(this.state.name, groupID, this.props.history);
+    const invitation = {
+      username: this.state.username,
+      groupId: groupID,
+    };
+
+    this.props.inviteUser(invitation, this.props.history);
   }
 
   render() {
@@ -55,19 +61,18 @@ class InvitePage extends Component {
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <input
-                    type="text"
-                    className="form-control form-control-lg "
-                    // {classnames("form-control form-control-lg ", {
-                    //   "is-invalid": errors.message,
-                    // })}
+                    type="email"
+                    className={classnames("form-control form-control-lg ", {
+                      "is-invalid": errors.username,
+                    })}
                     placeholder="User Name"
-                    name="name"
-                    value={this.state.name}
+                    name="username"
+                    value={this.state.username}
                     onChange={this.onChange}
                   />
-                  {/* {errors.message && (
-                    <div className="invalid-feedback">{errors.message}</div>
-                  )} */}
+                  {errors.username && (
+                    <div className="invalid-feedback">{errors.username}</div>
+                  )}
                 </div>
 
                 <input
