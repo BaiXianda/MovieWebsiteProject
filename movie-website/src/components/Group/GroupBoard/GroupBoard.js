@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { getGroup } from "../../../actions/groupActions";
 import { getMovieLists } from "../../../actions/movieListActions";
 import MovieListItem from "./MovieList/MovieListItem";
+import EventItem from "./Event/EventItem";
 
 class GroupBoard extends Component {
   componentDidMount() {
@@ -21,10 +22,11 @@ class GroupBoard extends Component {
     const moderator = this.props.group.moderator;
 
     let create;
+    let eventButton;
 
     if (currentUser === moderator) {
       create = (
-        <React.Fragment>
+        <div>
           <Link
             to={`/groupBoard/addMovieList/${id}`}
             className="btn btn-info btn-lg"
@@ -48,9 +50,21 @@ class GroupBoard extends Component {
           >
             <i className="fas fa-search"> Pull a Movie List</i>
           </Link>
-        </React.Fragment>
+        </div>
+      );
+
+      eventButton = (
+        <div>
+          <Link
+            to={`/groupBoard/addMovieList/${id}`}
+            className="btn btn-info btn-lg"
+          >
+            <i className="fas fa-plus-circle"> Create a Event</i>
+          </Link>
+        </div>
       );
     } else {
+      eventButton = "";
       create = "";
     }
 
@@ -96,7 +110,13 @@ class GroupBoard extends Component {
                   </div>
                 </Tab>
                 <Tab eventKey="currentEvents" title="Current Events">
-                  TEST2
+                  <div className="row mt-4">
+                    <div className="col-md">
+                      <EventItem />
+                    </div>
+
+                    <div className="col-md">{eventButton}</div>
+                  </div>
                 </Tab>
                 <Tab eventKey="passedEvent" title="Passed Events">
                   TEST3

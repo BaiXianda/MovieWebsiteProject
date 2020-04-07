@@ -27,15 +27,13 @@ public class MovieGroup {
     private String groupID;
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "movieGroup", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "movieGroup", orphanRemoval = true)
     @JsonIgnore
     private List<MovieList> movieLists = new ArrayList<>();
 
     private String moderator;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-//    @JoinColumn(name = "user_id", referencedColumnName = "username",
-//            nullable = false)
     @JsonIgnore()
     private Set<User> users = new HashSet<>();
 

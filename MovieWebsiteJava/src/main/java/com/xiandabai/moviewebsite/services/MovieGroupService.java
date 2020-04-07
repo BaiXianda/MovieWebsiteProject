@@ -30,7 +30,7 @@ public class MovieGroupService {
     public MovieGroup saveOrUpdateGroup(MovieGroup movieGroup, String username) {
 
         if(movieGroup.getId() != null) {
-            MovieGroup existMovieGroup= movieGroupRespository.findByGroupID(movieGroup.getGroupID());
+            MovieGroup existMovieGroup = movieGroupRespository.findByGroupID(movieGroup.getGroupID());
 
             if(existMovieGroup != null && !existMovieGroup.getModerator().equals(username)) {
                 throw new GroupIDException("Group not found in your account");
