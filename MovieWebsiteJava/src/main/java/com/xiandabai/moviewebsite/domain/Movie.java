@@ -32,6 +32,14 @@ public class Movie {
 
     }
 
+    public Movie(String name, String description, String trailerLink, String reviewLink) {
+        this.name = name;
+        this.description = description;
+        this.trailerLink = trailerLink;
+        this.reviewLink = reviewLink;
+    }
+
+
     public Long getId() {
         return id;
     }

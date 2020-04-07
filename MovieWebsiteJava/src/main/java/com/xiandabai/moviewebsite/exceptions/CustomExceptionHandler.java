@@ -23,4 +23,10 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         UsernameAlreadyExistsResponse exceptionResponse = new UsernameAlreadyExistsResponse(ex.getMessage());
         return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleMovieListIDException(MovieListIDException ex, WebRequest request) {
+        MovieListIDExceptionResponse exceptionResponse = new MovieListIDExceptionResponse(ex.getMessage());
+        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
 }

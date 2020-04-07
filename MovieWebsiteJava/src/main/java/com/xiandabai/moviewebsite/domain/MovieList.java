@@ -34,6 +34,11 @@ public class MovieList {
 
     }
 
+    public MovieList(String movieListName, String description) {
+        this.movieListName = movieListName;
+        this.description = description;
+    }
+
     public Long getId() {
         return id;
     }

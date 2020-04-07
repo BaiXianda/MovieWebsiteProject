@@ -3,15 +3,14 @@ import { Link } from "react-router-dom";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { searchMovies, clearState } from "../../../actions/movieActions";
-import MovieItem from "./MovieList/MovieListBoard/MovieItem";
+import { pullMovieList } from "../../../../actions/movieListActions";
 
-class SearchPage extends Component {
+class PullMovieList extends Component {
   constructor() {
     super();
 
     this.state = {
-      moviename: "",
+      movieListId: "",
       errors: {},
     };
 
@@ -26,10 +25,6 @@ class SearchPage extends Component {
     }
   }
 
-  componentDidMount() {
-    this.props.clearState();
-  }
-
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -38,14 +33,16 @@ class SearchPage extends Component {
     e.preventDefault();
 
     const { groupID } = this.props.match.params;
-
-    this.props.searchMovies(this.state.moviename, groupID);
+    this.props.pullMovieList(
+      this.state.movieListId,
+      groupID,
+      this.props.history
+    );
   }
 
   render() {
     const { errors } = this.state;
     const { groupID } = this.props.match.params;
-    const movies = this.props.movie.movies;
 
     return (
       <div className="Search Movie">
@@ -55,53 +52,45 @@ class SearchPage extends Component {
               <Link to={`/groupBoard/${groupID}`} className="btn btn-light">
                 Back to Group Board
               </Link>
-              <h4 className="display-4 text-center">Search Movie</h4>
+              <h4 className="display-4 text-center">Pull a Movie List</h4>
               <hr />
               <form onSubmit={this.onSubmit}>
                 <div className="form-group ">
                   <input
                     type="text"
                     className={classnames("form-control form-control-lg ", {
-                      "is-invalid": errors.moviename,
+                      "is-invalid": errors.movieListId,
                     })}
                     placeholder="Type Here"
-                    name="moviename"
-                    value={this.state.moviename}
+                    name="movieListId"
+                    value={this.state.movieListId}
                     onChange={this.onChange}
                   />
-                  {errors.moviename && (
-                    <div className="invalid-feedback">{errors.moviename}</div>
+                  {errors.movieListId && (
+                    <div className="invalid-feedback">{errors.movieListId}</div>
                   )}
                 </div>
 
-                <button type="submit" className="btn btn-primary btn-lg">
-                  Search
-                </button>
+                <input
+                  type="submit"
+                  className="btn btn-primary btn-block btn-lg"
+                />
               </form>
             </div>
           </div>
-          <hr />
-          {movies.map((movie) => (
-            <MovieItem key={movie.id} movie={movie} />
-          ))}
         </div>
       </div>
     );
   }
 }
 
-SearchPage.propTypes = {
-  searchMovies: PropTypes.func.isRequired,
-  movie: PropTypes.object.isRequired,
+PullMovieList.propTypes = {
   errors: PropTypes.object.isRequired,
-  clearState: PropTypes.func.isRequired,
+  pullMovieList: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  movie: state.movie,
   errors: state.errors,
 });
 
-export default connect(mapStateToProps, { searchMovies, clearState })(
-  SearchPage
-);
+export default connect(mapStateToProps, { pullMovieList })(PullMovieList);

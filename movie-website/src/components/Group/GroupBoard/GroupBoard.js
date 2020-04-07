@@ -40,6 +40,14 @@ class GroupBoard extends Component {
           >
             <i className="fas fa-plus-circle"> Invite User Into Group</i>
           </Link>
+
+          <hr />
+          <Link
+            to={`/groupBoard/pullMovieList/${id}`}
+            className="btn btn-info btn-lg"
+          >
+            <i className="fas fa-search"> Pull a Movie List</i>
+          </Link>
         </React.Fragment>
       );
     } else {
@@ -76,14 +84,14 @@ class GroupBoard extends Component {
                       ))}
                     </div>
                     <div className="col-md ">
+                      {create}
+                      <hr />
                       <Link
                         to={`/groupBoard/searchPage/${id}`}
                         className="btn btn-info btn-lg"
                       >
                         <i className="fas fa-search"> Search Movie</i>
                       </Link>
-                      <hr />
-                      {create}
                     </div>
                   </div>
                 </Tab>
