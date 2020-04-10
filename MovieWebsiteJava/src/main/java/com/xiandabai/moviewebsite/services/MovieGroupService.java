@@ -16,9 +16,6 @@ import java.util.List;
 public class MovieGroupService {
 
     @Autowired
-    private ValidationErrorService validationErrorService;
-
-    @Autowired
     private MovieGroupRespository movieGroupRespository;
 
     @Autowired

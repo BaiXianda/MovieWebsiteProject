@@ -46,7 +46,7 @@ class MovieListItem extends Component {
           <h5 className="card-title">Name : {movieList.movieListName}</h5>
           <p className="card-text text-truncate ">{movieList.description}</p>
           <Link
-            to={`/groupBoard/movieListBoard/${movieList.id}`}
+            to={`/groupBoard/movieListBoard/${movieList.id}/${moderator}`}
             className="btn btn-primary"
           >
             View

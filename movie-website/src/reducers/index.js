@@ -5,6 +5,7 @@ import movieListReducer from "./movieListReducer";
 import movieReducer from "./movieReducer";
 import securityReducer from "./securityReducer";
 import invitationReducer from "./invitationReducer";
+import eventReducer from "./eventReducer";
 
 export default combineReducers({
   errors: errorRedcuer,
@@ -13,4 +14,5 @@ export default combineReducers({
   movie: movieReducer,
   security: securityReducer,
   invitation: invitationReducer,
+  event: eventReducer,
 });

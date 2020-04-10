@@ -31,6 +31,10 @@ public class MovieGroup {
     @JsonIgnore
     private List<MovieList> movieLists = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "movieGroup", orphanRemoval = true)
+    @JsonIgnore
+    private List<Event> events = new ArrayList<>();
+
     private String moderator;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)

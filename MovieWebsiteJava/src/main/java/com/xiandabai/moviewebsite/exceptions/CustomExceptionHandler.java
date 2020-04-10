@@ -29,4 +29,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         MovieListIDExceptionResponse exceptionResponse = new MovieListIDExceptionResponse(ex.getMessage());
         return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
+
+
 }

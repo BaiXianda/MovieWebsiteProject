@@ -25,6 +25,9 @@ import Login from "./components/UserManagement/Login";
 import InvitePage from "./components/Group/GroupBoard/InvitePage";
 import SearchPage from "./components/Group/GroupBoard/SearchPage";
 import PullMovieList from "./components/Group/GroupBoard/MovieList/PullMovieList";
+import AddEvent from "./components/Group/GroupBoard/Event/AddEvent";
+import UpdateEvent from "./components/Group/GroupBoard/Event/UpdateEvent";
+import EventPage from "./components/Group/GroupBoard/Event/EventPage";
 
 const jwtToken = localStorage.jwtToken;
 
@@ -75,7 +78,7 @@ function App() {
             />
             <SecuredRoute
               exact
-              path="/groupBoard/movieListBoard/:id"
+              path="/groupBoard/movieListBoard/:id/:moderator"
               component={MovieListBoard}
             />
             <SecuredRoute
@@ -102,6 +105,21 @@ function App() {
               exact
               path="/groupBoard/pullMovieList/:groupID"
               component={PullMovieList}
+            />
+            <SecuredRoute
+              exact
+              path="/groupBoard/addEvent/:groupID"
+              component={AddEvent}
+            />
+            <SecuredRoute
+              exact
+              path="/groupBoard/updateEvent/:eventID"
+              component={UpdateEvent}
+            />
+            <SecuredRoute
+              exact
+              path="/groupBoard/eventPage/:eventID"
+              component={EventPage}
             />
           </Switch>
         </div>

@@ -17,7 +17,7 @@ class MovieListBoard extends Component {
     const movies = this.props.movies;
 
     const currentUser = this.props.currentUser;
-    const moderator = this.props.moderator;
+    const { moderator } = this.props.match.params;
 
     let create;
 

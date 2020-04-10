@@ -1,10 +1,13 @@
 package com.xiandabai.moviewebsite.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.HashMap;
 
 @Entity
 public class Event {
@@ -13,13 +16,37 @@ public class Event {
     @GeneratedValue
     private Long id;
 
+    @NotBlank(message = "must have a name")
+    private String eventName;
+    private String description;
 
-    @NotBlank(message = "must set eventTime")
+    @NotNull(message = "must set eventTime")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "America/New_York")
+    @Column(updatable = false)
     private Date eventTime;
 
+    @NotNull(message = "must set eventTime")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "America/New_York")
+    private Date voteStartTime;
 
-    @NotBlank(message = "must set a title")
-    private String title;
+    @NotNull(message = "must set eventTime")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "America/New_York")
+    private Date voteEndTime;
+
+    @NotNull(message = "must include a movie list for the event")
+    @Column(updatable = false)
+    private Long movieListId;
+    @NotBlank(message = "movie group id is required")
+    private String eventGroupId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn( nullable = false)
+    @JsonIgnore
+    private MovieGroup movieGroup;
+
+    // String is username
+    private HashMap<String, Movie> votes;
+
 
     public Event() {
 
@@ -33,6 +60,21 @@ public class Event {
         this.id = id;
     }
 
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Date getEventTime() {
         return eventTime;
@@ -42,13 +84,43 @@ public class Event {
         this.eventTime = eventTime;
     }
 
-
-
-    public String getTitle() {
-        return title;
+    public Date getVoteStartTime() {
+        return voteStartTime;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setVoteStartTime(Date voteStartTime) {
+        this.voteStartTime = voteStartTime;
+    }
+
+    public Date getVoteEndTime() {
+        return voteEndTime;
+    }
+
+    public void setVoteEndTime(Date voteEndTime) {
+        this.voteEndTime = voteEndTime;
+    }
+
+    public Long getMovieListId() {
+        return movieListId;
+    }
+
+    public void setMovieListId(Long movieListId) {
+        this.movieListId = movieListId;
+    }
+
+    public String getEventGroupId() {
+        return eventGroupId;
+    }
+
+    public void setEventGroupId(String eventGroupId) {
+        this.eventGroupId = eventGroupId;
+    }
+
+    public MovieGroup getMovieGroup() {
+        return movieGroup;
+    }
+
+    public void setMovieGroup(MovieGroup movieGroup) {
+        this.movieGroup = movieGroup;
     }
 }

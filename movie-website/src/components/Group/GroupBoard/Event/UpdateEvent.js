@@ -3,9 +3,9 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { createEvent } from "../../../../actions/eventAction";
+import { createEvent, getEvent } from "../../../../actions/eventAction";
 
-class AddEvent extends Component {
+class UpdateEvent extends Component {
   constructor() {
     super();
 
@@ -16,6 +16,7 @@ class AddEvent extends Component {
       voteStartTime: "",
       voteEndTime: "",
       movieListId: "",
+      eventGroupId: "",
       errors: {},
     };
 
@@ -27,6 +28,33 @@ class AddEvent extends Component {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
+
+    const {
+      id,
+      eventName,
+      description,
+      eventTime,
+      voteStartTime,
+      voteEndTime,
+      movieListId,
+      eventGroupId,
+    } = nextProps.event;
+
+    this.setState({
+      id,
+      eventName,
+      description,
+      eventTime,
+      voteStartTime,
+      voteEndTime,
+      movieListId,
+      eventGroupId,
+    });
+  }
+
+  componentDidMount() {
+    const { eventID } = this.props.match.params;
+    this.props.getEvent(eventID, this.props.history);
   }
 
   onChange(e) {
@@ -34,17 +62,17 @@ class AddEvent extends Component {
   }
 
   onSubmit(e) {
-    const { groupID } = this.props.match.params;
     e.preventDefault();
 
     const newEvent = {
+      id: this.state.id,
       eventName: this.state.eventName,
       description: this.state.description,
-      eventTime: this.state.eventTime,
       voteStartTime: this.state.voteStartTime,
       voteEndTime: this.state.voteEndTime,
       movieListId: this.state.movieListId,
-      eventGroupId: groupID,
+      eventTime: this.state.eventTime,
+      eventGroupId: this.state.eventGroupId,
     };
 
     this.props.createEvent(newEvent, this.props.history);
@@ -52,14 +80,16 @@ class AddEvent extends Component {
 
   render() {
     const { errors } = this.state;
-    const { groupID } = this.props.match.params;
 
     return (
       <div className="add-Event">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link to={`/groupBoard/${groupID}`} className="btn btn-light">
+              <Link
+                to={`/groupBoard/${this.state.eventGroupId}`}
+                className="btn btn-light"
+              >
                 Back to Group Board
               </Link>
               <h4 className="display-4 text-center">Add a Event</h4>
@@ -112,6 +142,7 @@ class AddEvent extends Component {
                     name="movieListId"
                     value={this.state.movieListId}
                     onChange={this.onChange}
+                    disabled
                   />
                   {errors.movieListId && (
                     <div className="invalid-feedback">{errors.movieListId}</div>
@@ -129,6 +160,7 @@ class AddEvent extends Component {
                     name="eventTime"
                     value={this.state.eventTime}
                     onChange={this.onChange}
+                    disabled
                   />
                   {errors.eventTime && (
                     <div className="invalid-feedback">{errors.eventTime}</div>
@@ -184,13 +216,16 @@ class AddEvent extends Component {
   }
 }
 
-AddEvent.protoTypes = {
+UpdateEvent.protoTypes = {
   errors: PropTypes.object.isRequired,
   createEvent: PropTypes.func.isRequired,
+  getEvent: PropTypes.func.isRequired,
+  event: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  event: state.event.event,
   errors: state.errors,
 });
 
-export default connect(mapStateToProps, { createEvent })(AddEvent);
+export default connect(mapStateToProps, { createEvent, getEvent })(UpdateEvent);
