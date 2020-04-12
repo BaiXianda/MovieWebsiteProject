@@ -30,9 +30,10 @@ public class User implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
     private Set<Invitation> invitations = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
+    private Set<EventNotification> eventNotifications = new HashSet<>();
+
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
-//    @JoinColumn(name = "movie_group_id", referencedColumnName = "groupID",
-//                nullable = false)
     @JsonIgnore
     private Set<MovieGroup> movieGroups = new HashSet<>();
 
@@ -124,6 +125,14 @@ public class User implements UserDetails {
 
     public void setInvitations(Set<Invitation> invitations) {
         this.invitations = invitations;
+    }
+
+    public Set<EventNotification> getEventNotifications() {
+        return eventNotifications;
+    }
+
+    public void setEventNotifications(Set<EventNotification> eventNotifications) {
+        this.eventNotifications = eventNotifications;
     }
 }
 

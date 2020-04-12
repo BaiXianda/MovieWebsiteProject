@@ -118,7 +118,7 @@ function App() {
             />
             <SecuredRoute
               exact
-              path="/groupBoard/eventPage/:eventID"
+              path="/groupBoard/eventPage/:eventID/:movieListId"
               component={EventPage}
             />
           </Switch>

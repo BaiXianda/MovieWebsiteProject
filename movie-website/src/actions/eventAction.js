@@ -1,5 +1,11 @@
 import axios from "axios";
-import { GET_ERRORS, GET_EVENT, GET_EVENTS, DELETE_EVENT } from "./types";
+import {
+  GET_ERRORS,
+  GET_EVENT,
+  GET_EVENTS,
+  DELETE_EVENT,
+  GET_MOVIE,
+} from "./types";
 
 export const createEvent = (event, history) => async (dispatch) => {
   try {
@@ -15,6 +21,35 @@ export const createEvent = (event, history) => async (dispatch) => {
       payload: error.response.data,
     });
   }
+};
+
+export const vote = (eventId, movieId) => async (dispatch) => {
+  try {
+    if (window.confirm("Are you sure to vote this movie?")) {
+      const res = await axios.post(
+        `http://localhost:8080/api/event/vote/${eventId}/${movieId}`
+      );
+      dispatch({
+        type: GET_EVENT,
+        payload: res.data,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: error.response.data,
+    });
+  }
+};
+
+export const getWinner = (eventId) => async (dispatch) => {
+  const res = await axios.get(
+    `http://localhost:8080/api/event/winner/${eventId}`
+  );
+  dispatch({
+    type: GET_MOVIE,
+    payload: res.data,
+  });
 };
 
 export const getEvents = (groupId) => async (dispatch) => {

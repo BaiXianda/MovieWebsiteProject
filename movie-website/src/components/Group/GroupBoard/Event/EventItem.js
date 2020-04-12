@@ -45,7 +45,7 @@ class EventItem extends Component {
           <h5 className="card-title">Description: {event.description}</h5>
           <h6>Event Time: {event.eventTime}</h6>
           <Link
-            to={`/groupBoard/eventPage/${event.id}`}
+            to={`/groupBoard/eventPage/${event.id}/${event.movieListId}`}
             className="btn btn-primary"
           >
             View

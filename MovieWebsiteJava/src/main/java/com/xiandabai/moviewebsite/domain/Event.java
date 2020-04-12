@@ -44,9 +44,10 @@ public class Event {
     @JsonIgnore
     private MovieGroup movieGroup;
 
-    // String is username
-    private HashMap<String, Movie> votes;
-
+    // String is username, Long is movie id
+    private HashMap<String, Long> votes = new HashMap<String, Long>();
+    // Long is movie id, Integer is vote counts
+    private HashMap<Long, Integer> counts = new HashMap<Long, Integer>();
 
     public Event() {
 
@@ -123,4 +124,21 @@ public class Event {
     public void setMovieGroup(MovieGroup movieGroup) {
         this.movieGroup = movieGroup;
     }
+
+    public HashMap<String, Long> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(HashMap<String, Long> votes) {
+        this.votes = votes;
+    }
+
+    public HashMap<Long, Integer> getCounts() {
+        return counts;
+    }
+
+    public void setCounts(HashMap<Long, Integer> counts) {
+        this.counts = counts;
+    }
+
 }

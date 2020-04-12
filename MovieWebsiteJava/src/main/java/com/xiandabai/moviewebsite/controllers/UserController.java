@@ -1,12 +1,14 @@
 package com.xiandabai.moviewebsite.controllers;
 
 
+import com.xiandabai.moviewebsite.domain.EventNotification;
 import com.xiandabai.moviewebsite.domain.Invitation;
 import com.xiandabai.moviewebsite.domain.User;
 import com.xiandabai.moviewebsite.payload.JWTLoginSuccessResponse;
 import com.xiandabai.moviewebsite.payload.LoginRequest;
 import com.xiandabai.moviewebsite.repositories.UserRepository;
 import com.xiandabai.moviewebsite.security.JwtTokenProvider;
+import com.xiandabai.moviewebsite.services.EventNotificationService;
 import com.xiandabai.moviewebsite.services.UserService;
 import com.xiandabai.moviewebsite.services.ValidationErrorService;
 import com.xiandabai.moviewebsite.valiator.UserValidator;
@@ -46,9 +48,11 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    // test
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    private EventNotificationService eventNotificationService;
 
 
     @PostMapping("/users/login")
@@ -82,6 +86,7 @@ public class UserController {
         return new ResponseEntity<User>(newUser, HttpStatus.CREATED);
     }
 
+    // test only
     @GetMapping("/users/{username}")
     public User getUsers(@PathVariable String username) {
 
@@ -89,15 +94,27 @@ public class UserController {
     }
 
     @GetMapping("/user/invitations")
-    public Iterable<Invitation> getUsers(Principal principal) {
+    public Iterable<Invitation> getInvitations(Principal principal) {
 
         return userRepository.findByUsername(principal.getName()).getInvitations();
+    }
+
+    @GetMapping("/user/eventNotifications")
+    public Iterable<EventNotification> getEventNotifications(Principal principal) {
+
+        return userRepository.findByUsername(principal.getName()).getEventNotifications();
     }
 
     @DeleteMapping("/user/invitation/{id}")
     public ResponseEntity<?> deleteInvitation(@PathVariable Long id) {
         userService.deleteInvitation(id);
         return new ResponseEntity<String>("Invitation with ID: " + id + " is deleted", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/user/eventNotification/{id}")
+    public ResponseEntity<?> deleteEventNotification(@PathVariable Long id) {
+        eventNotificationService.deleteNotification(id);
+        return new ResponseEntity<String>("Event Notification with ID: " + id + " is deleted", HttpStatus.OK);
     }
 
 }
