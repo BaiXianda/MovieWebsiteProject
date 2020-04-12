@@ -18,7 +18,7 @@ export const accpetInvitation = (id) => async (dispatch) => {
 };
 
 export const deleteInvitation = (id) => async (dispatch) => {
-  if (window.confirm("Are you sure to delete this project?")) {
+  if (window.confirm("Are you sure to delete this invitaion?")) {
     await axios.delete(`/api/user/invitation/${id}`);
     dispatch({
       type: DELETE_INVITATION,

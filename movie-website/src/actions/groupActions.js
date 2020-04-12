@@ -38,7 +38,7 @@ export const getGroup = (id, history) => async (dispatch) => {
 };
 
 export const deleteGroup = (id) => async (dispatch) => {
-  if (window.confirm("Are you sure to delete this project?")) {
+  if (window.confirm("Are you sure to delete this group?")) {
     await axios.delete(`http://localhost:8080/api/group/${id}`);
     dispatch({
       type: DELETE_GROUP,
@@ -50,7 +50,7 @@ export const deleteGroup = (id) => async (dispatch) => {
 export const inviteUser = (inviation, history) => async (dispatch) => {
   try {
     await axios.post("http://localhost:8080/api/group/inviteUser", inviation);
-    history.push(`/groupBoard/${inviation.groupID}`);
+    history.push(`/groupBoard/${inviation.groupId}`);
     dispatch({
       type: GET_ERRORS,
       payload: {},

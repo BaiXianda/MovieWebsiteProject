@@ -15,8 +15,6 @@ class Invitation extends Component {
     this.props.accpetInvitation(id);
   };
 
-  onAddClick = (id) => {};
-
   render() {
     const { invitation } = this.props;
 

@@ -45,7 +45,7 @@ export const getMovie = (id, history) => async (dispatch) => {
 };
 
 export const deleteGroup = (id) => async (dispatch) => {
-  if (window.confirm("Are you sure to delete this project?")) {
+  if (window.confirm("Are you sure to delete this movie?")) {
     await axios.delete(`http://localhost:8080/api/movie/${id}`);
     dispatch({
       type: DELETE_MOVIE,
