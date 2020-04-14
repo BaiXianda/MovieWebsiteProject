@@ -9,7 +9,7 @@ import {
 
 export const createEvent = (event, history) => async (dispatch) => {
   try {
-    await axios.post("http://localhost:8080/api/event", event);
+    await axios.post("/api/event", event);
     history.push(`/groupBoard/${event.eventGroupId}`);
     dispatch({
       type: GET_ERRORS,
@@ -26,9 +26,7 @@ export const createEvent = (event, history) => async (dispatch) => {
 export const vote = (eventId, movieId) => async (dispatch) => {
   try {
     if (window.confirm("Are you sure to vote this movie?")) {
-      const res = await axios.post(
-        `http://localhost:8080/api/event/vote/${eventId}/${movieId}`
-      );
+      const res = await axios.post(`/api/event/vote/${eventId}/${movieId}`);
       dispatch({
         type: GET_EVENT,
         payload: res.data,
@@ -43,9 +41,7 @@ export const vote = (eventId, movieId) => async (dispatch) => {
 };
 
 export const getWinner = (eventId) => async (dispatch) => {
-  const res = await axios.get(
-    `http://localhost:8080/api/event/winner/${eventId}`
-  );
+  const res = await axios.get(`/api/event/winner/${eventId}`);
   dispatch({
     type: GET_MOVIE,
     payload: res.data,
@@ -53,7 +49,7 @@ export const getWinner = (eventId) => async (dispatch) => {
 };
 
 export const getEvents = (groupId) => async (dispatch) => {
-  const res = await axios.get(`http://localhost:8080/api/event/all/${groupId}`);
+  const res = await axios.get(`/api/event/all/${groupId}`);
   dispatch({
     type: GET_EVENTS,
     payload: res.data,
@@ -62,7 +58,7 @@ export const getEvents = (groupId) => async (dispatch) => {
 
 export const getEvent = (id, history) => async (dispatch) => {
   try {
-    const res = await axios.get(`http://localhost:8080/api/event/${id}`);
+    const res = await axios.get(`/api/event/${id}`);
     dispatch({
       type: GET_EVENT,
       payload: res.data,
@@ -74,7 +70,7 @@ export const getEvent = (id, history) => async (dispatch) => {
 
 export const deleteEvent = (id) => async (dispatch) => {
   if (window.confirm("Are you sure to delete this event?")) {
-    await axios.delete(`http://localhost:8080/api/event/${id}`);
+    await axios.delete(`/api/event/${id}`);
     dispatch({
       type: DELETE_EVENT,
       payload: id,

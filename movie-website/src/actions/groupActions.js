@@ -3,7 +3,7 @@ import { GET_ERRORS, GET_GROUPS, GET_GROUP, DELETE_GROUP } from "./types";
 
 export const createGroup = (group, history) => async (dispatch) => {
   try {
-    await axios.post("http://localhost:8080/api/group", group);
+    await axios.post("/api/group", group);
     history.push("/dashboard");
     dispatch({
       type: GET_ERRORS,
@@ -18,7 +18,7 @@ export const createGroup = (group, history) => async (dispatch) => {
 };
 
 export const getGroups = () => async (dispatch) => {
-  const res = await axios.get("http://localhost:8080/api/group/groups");
+  const res = await axios.get("/api/group/groups");
   dispatch({
     type: GET_GROUPS,
     payload: res.data,
@@ -27,7 +27,7 @@ export const getGroups = () => async (dispatch) => {
 
 export const getGroup = (id, history) => async (dispatch) => {
   try {
-    const res = await axios.get(`http://localhost:8080/api/group/${id}`);
+    const res = await axios.get(`/api/group/${id}`);
     dispatch({
       type: GET_GROUP,
       payload: res.data,
@@ -39,7 +39,7 @@ export const getGroup = (id, history) => async (dispatch) => {
 
 export const deleteGroup = (id) => async (dispatch) => {
   if (window.confirm("Are you sure to delete this group?")) {
-    await axios.delete(`http://localhost:8080/api/group/${id}`);
+    await axios.delete(`/api/group/${id}`);
     dispatch({
       type: DELETE_GROUP,
       payload: id,
@@ -49,7 +49,7 @@ export const deleteGroup = (id) => async (dispatch) => {
 
 export const inviteUser = (inviation, history) => async (dispatch) => {
   try {
-    await axios.post("http://localhost:8080/api/group/inviteUser", inviation);
+    await axios.post("/api/group/inviteUser", inviation);
     history.push(`/groupBoard/${inviation.groupId}`);
     dispatch({
       type: GET_ERRORS,

@@ -34,7 +34,7 @@ export const getMovies = (id) => async (dispatch) => {
 
 export const getMovie = (id, history) => async (dispatch) => {
   try {
-    const res = await axios.get(`http://localhost:8080/api/movie/${id}`);
+    const res = await axios.get(`/api/movie/${id}`);
     dispatch({
       type: GET_MOVIE,
       payload: res.data,
@@ -46,7 +46,7 @@ export const getMovie = (id, history) => async (dispatch) => {
 
 export const deleteGroup = (id) => async (dispatch) => {
   if (window.confirm("Are you sure to delete this movie?")) {
-    await axios.delete(`http://localhost:8080/api/movie/${id}`);
+    await axios.delete(`/api/movie/${id}`);
     dispatch({
       type: DELETE_MOVIE,
       payload: id,
